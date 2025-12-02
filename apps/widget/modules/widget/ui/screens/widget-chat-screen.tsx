@@ -50,7 +50,6 @@ export const WidgetChatScreen = () => {
         conversation?.threadId && contactSessionId?
             {
                 threadId: conversation.threadId,
-                contactSessionId,
             } : "skip",
         {initialNumItems: 10},
    );

@@ -1,36 +1,33 @@
 import {ConvexError, v} from "convex/values";
-import {action, query} from "../_generated/server";
-import {internal} from "../_generated/api";
+import {mutation, query} from "../_generated/server";
+import {components, internal} from "../_generated/api";
 import { supportAgent } from "../system/ai/agents/supportAgent";
 import { paginationOptsValidator } from "convex/server";
+import { saveMessage } from "@convex-dev/agent";
 
-export const create = action({
+export const create = mutation({
     args: {
         prompt: v.string(),
-        threadId: v.string(),
-        contactSessionId: v.id("contactSessions"),
+        conversationId: v.id("conversations"),
     },
     handler: async (ctx, args) => {
-        const contactSession = await ctx.runQuery(
-            internal.system.contactSessions.getOne,
-            {
-                contactSessionId: args.contactSessionId,
-            }
-        );
-
-        if(!contactSession || contactSession.expiresAt < Date.now()){
+        const identity = await ctx.auth.getUserIdentity();
+        if(!identity) {
             throw new ConvexError({
-                code: "UNAUTHORIZED",
-                message: "Invalid session",
-            })
+                code:"UNAUTHORIZED",
+                message:"Identity not found",
+            }
+            );
+        }
+        const orgId = identity.orgId as string ;
+        if(!orgId) {
+            throw new ConvexError({
+                code:"UNAUTHORIZED",
+                message:"Organization ID not found",
+            });
         }
 
-        const conversation = await ctx.runQuery(
-            internal.system.conversations.getByThreadId,
-            {
-                threadId: args.threadId,
-            },
-        );
+        const conversation = await ctx.db.get(args.conversationId);
 
         if(!conversation) {
             throw new ConvexError({
@@ -38,6 +35,12 @@ export const create = action({
                 message: "Conversation not found",
             });
         }
+        if(conversation.organizationId !== orgId) {
+                throw new ConvexError({
+                    code: "UNAUTHORIZED",
+                    message: "Organization ID not found",
+                });
+            }
 
         if(conversation.status === "resolved"){
             throw new ConvexError({
@@ -46,13 +49,14 @@ export const create = action({
             });
         }
 
-        await supportAgent.generateText(
-            ctx,
-            {threadId: args.threadId},
-            {
-                prompt: args.prompt,
-            }
-        )
+        await saveMessage(ctx, components.agent,{
+            threadId:conversation.threadId,
+            agentName: identity.familyName,
+            message: {
+                role: "assistant",
+                content: arg.prompt,
+        },
+        });
     },
 });
 
