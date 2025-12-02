@@ -100,9 +100,9 @@ export const WidgetChatScreen = () => {
             <AIConversation>
                 <AIConversationContent>
                     <InfiniteScrollTrigger canLoadMore={canLoadMore} isLoadingMore={isLoadingMore} onLoadMore={handleLoadMore} ref={topElementRef} />
-                    {toUIMessages(messages.results ?? [])?.map((message)=> {
+                    {toUIMessages(messages.results ?? [])?.map((message: { role: string; content: string; id: string }) => {
                         return (
-                            <AIMessage from={message.role==="user" ? "user" : "assistant"} key={message.id}>
+                            <AIMessage from={message.role === "user" ? "user" : "assistant"} key={message.id}>
                                 <AIMessageContent>
                                     <AIResponse>{message.content}</AIResponse>
                                 </AIMessageContent>
