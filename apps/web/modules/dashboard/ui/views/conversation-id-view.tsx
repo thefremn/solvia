@@ -43,7 +43,7 @@ export const ConversationIdView = ({
   });
 
   const messages = useThreadMessages(
-    api.public.messages.getMany,
+    api.private.messages.getMany,
     conversation?.threadId ? { threadId: conversation.threadId } : "skip",
     { initialNumItems: 10 }
   );

@@ -59,39 +59,39 @@ export const create = action({
 export const getMany = query({
     args: {
         threadId: v.string(),
+        contactSessionId: v.id("contactSessions"),  // ✅ Add back
         paginationOpts: paginationOptsValidator,
     },
     handler: async (ctx, args) => {
-    const identity = await ctx.auth.getUserIdentity();
-        if(!identity) {
+        // ✅ Validate contact session (for widget)
+        const contactSession = await ctx.db.get(args.contactSessionId);
+        if(!contactSession || contactSession.expiresAt < Date.now()) {
             throw new ConvexError({
-                code:"UNAUTHORIZED",
-                message:"Identity not found",
-            }
-            );
-        }
-        const orgId = identity.orgId as string ;
-        if(!orgId) {
-            throw new ConvexError({
-                code:"UNAUTHORIZED",
-                message:"Organization ID not found",
+                code: "UNAUTHORIZED",
+                message: "Invalid session",
             });
         }
+
         const conversation = await ctx.db
-        .query("conversations")
-        .withIndex("by_thread_id", (q) => q.eq("threadId", args.threadId)).unique();
+            .query("conversations")
+            .withIndex("by_thread_id", (q) => q.eq("threadId", args.threadId))
+            .unique();
+        
         if(!conversation) {
             throw new ConvexError({
                 code: "NOT_FOUND",
                 message: "Conversation not found",
             });
         }
-         if(conversation.organizationId !== orgId) {
-                throw new ConvexError({
-                    code: "UNAUTHORIZED",
-                    message: "Organization ID not found",
-                });
-            }
+
+        // ✅ Verify conversation belongs to contact session
+        if(conversation.contactSessionId !== args.contactSessionId) {
+            throw new ConvexError({
+                code: "UNAUTHORIZED",
+                message: "Incorrect session",
+            });
+        }
+
         const paginated = await supportAgent.listMessages(ctx, {
             threadId: args.threadId,
             paginationOpts: args.paginationOpts,

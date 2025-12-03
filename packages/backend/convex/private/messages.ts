@@ -54,7 +54,7 @@ export const create = mutation({
             agentName: identity.familyName,
             message: {
                 role: "assistant",
-                content: arg.prompt,
+                content: args.prompt,
         },
         });
     },
