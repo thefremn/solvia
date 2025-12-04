@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      react-dropzone:
+        specifier: ^14.3.8
+        version: 14.3.8(react@19.1.1)
       react-hook-form:
         specifier: 7.66.1
         version: 7.66.1(react@19.1.1)
@@ -224,6 +227,9 @@ importers:
       convex-helpers:
         specifier: ^0.1.106
         version: 0.1.106(@standard-schema/spec@1.0.0)(convex@1.25.4(@clerk/clerk-react@5.57.0(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(react@19.1.1))(react@19.1.1)(typescript@5.9.3)(zod@3.25.67)
+      react-dropzone:
+        specifier: ^14.3.8
+        version: 14.3.8(react@19.1.1)
       zod:
         specifier: 3.25.67
         version: 3.25.67
@@ -4492,6 +4498,7 @@ packages:
   next@15.4.5:
     resolution: {integrity: sha512-nJ4v+IO9CPmbmcvsPebIoX3Q+S7f6Fu08/dEWu0Ttfa+wVwQRh9epcmsyCPjmL2b8MxC+CkBR97jgDhUUztI3g==}
     engines: {node: ^18.18.0 || ^19.8.0 || >= 20.0.0}
+    deprecated: This version has a security vulnerability. Please upgrade to a patched version. See https://nextjs.org/blog/CVE-2025-66478 for more details.
     hasBin: true
     peerDependencies:
       '@opentelemetry/api': ^1.1.0

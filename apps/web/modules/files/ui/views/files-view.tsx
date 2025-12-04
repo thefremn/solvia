@@ -21,6 +21,9 @@ import type { PublicFile } from "@workspace/backend/private/files";
 import { Button } from "@workspace/ui/components/button";
 import { FileIcon, MoreHorizontalIcon, PlusIcon, TrashIcon } from "lucide-react";
 import {Badge} from "@workspace/ui/components/badge";
+import { UploadDialog } from "../components/upload-dialog";
+import { useState } from "react";
+import { DeleteFileDialog } from "../components/delete-file.dialog";
 
 export const FilesView = () => {
 
@@ -44,7 +47,30 @@ export const FilesView = () => {
         loadSize: 10,
     })
 
+    const [uploadDialogOpen, setUploadDialogOpen] = useState(false);
+    const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+    const [selectedFile, setSelectedFile] = useState<PublicFile | null>(null);
+    const handleDeleteClick = (file: PublicFile) => {
+        setSelectedFile(file);
+        setDeleteDialogOpen(true);
+    }
+    const handleFileDeleted = () => {
+        setSelectedFile(null);
+    }
+
     return (
+        <>
+        <DeleteFileDialog
+                onOpenChange={setDeleteDialogOpen}
+                open={deleteDialogOpen} 
+                file={selectedFile}  
+                onDeleted={handleFileDeleted}   
+                   />
+        <UploadDialog 
+        onOpenChange={setUploadDialogOpen}
+        open={uploadDialogOpen}
+        />
+        
         <div className="flex min-h-screen flex-col bg-muted p-8">
             <div className="mx-auto w-full max-w-screen-md">
                 <div className="space-y-2">
@@ -58,7 +84,7 @@ export const FilesView = () => {
 
                 <div className="mt-8 rounded-lg border bg-background">
                     <div className="flex items-center justify-end border-b px-6 py-4">
-                      <Button onClick={() => {}}>
+                      <Button onClick={() =>setUploadDialogOpen(true)}>
                          <PlusIcon />
                          Add New
                       </Button>
@@ -119,7 +145,9 @@ export const FilesView = () => {
                                                     </Button>
                                                 </DropdownMenuTrigger>
                                                 <DropdownMenuContent align="end">
-                                                    <DropdownMenuItem className="text-destructive" onClick={() => {}}>
+                                                    <DropdownMenuItem 
+                                                    className="text-destructive" 
+                                                    onClick={() => handleDeleteClick(file)}>
                                                         <TrashIcon className="size-4 mr-2" />
                                                         Delete
                                                     </DropdownMenuItem>
@@ -144,6 +172,7 @@ export const FilesView = () => {
                 </div>
             </div>
         </div>
+        </>
     );
 };
 
