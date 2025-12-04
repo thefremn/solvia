@@ -48,6 +48,9 @@ importers:
       '@hookform/resolvers':
         specifier: 5.2.0
         version: 5.2.0(react-hook-form@7.66.1(react@19.1.1))
+      '@sentry/core':
+        specifier: ^10.29.0
+        version: 10.29.0
       '@sentry/nextjs':
         specifier: ^10
         version: 10.27.0(@opentelemetry/context-async-hooks@2.2.0(@opentelemetry/api@1.9.0))(@opentelemetry/core@2.2.0(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@2.2.0(@opentelemetry/api@1.9.0))(next@15.4.5(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(react@19.1.1)(webpack@5.103.0)
@@ -2399,6 +2402,10 @@ packages:
 
   '@sentry/core@10.27.0':
     resolution: {integrity: sha512-Zc68kdH7tWTDtDbV1zWIbo3Jv0fHAU2NsF5aD2qamypKgfSIMSbWVxd22qZyDBkaX8gWIPm/0Sgx6aRXRBXrYQ==}
+    engines: {node: '>=18'}
+
+  '@sentry/core@10.29.0':
+    resolution: {integrity: sha512-olQ2DU9dA/Bwsz3PtA9KNXRMqBWRQSkPw+MxwWEoU1K1qtiM9L0j6lbEFb5iSY3d7WYD5MB+1d5COugjSBrHtw==}
     engines: {node: '>=18'}
 
   '@sentry/core@8.55.0':
@@ -7469,6 +7476,8 @@ snapshots:
       - supports-color
 
   '@sentry/core@10.27.0': {}
+
+  '@sentry/core@10.29.0': {}
 
   '@sentry/core@8.55.0': {}
 
