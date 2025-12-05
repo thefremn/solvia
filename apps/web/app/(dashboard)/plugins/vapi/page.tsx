@@ -1,6 +1,9 @@
+import { VapiView } from "@/modules/plugins/ui/views/vapi-view";
+
 const Page = () => {
     return (
-        <p>Vapi Plugin</p>
+       <VapiView />
+
     )
 }
 
