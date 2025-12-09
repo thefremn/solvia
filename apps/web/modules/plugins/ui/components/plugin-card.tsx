@@ -67,6 +67,18 @@ export const PluginCard = ({
           ))}
         </div>
       </div>
+      <div className="text-centre">
+        <Button 
+          className="size-full"
+          disabled={isDisabled}
+          onClick={onSubmit}
+          variant="default"
+        >
+          Connect
+          <PlugIcon />
+        </Button>
+
+      </div>
     </div>
   );
 };
