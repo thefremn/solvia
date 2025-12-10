@@ -82,6 +82,8 @@ const VapiPluginForm = ({
           privateApiKey: values.privateApiKey,
         }
       });
+      setOpen(false);
+      toast.success("Vapi secret created");
     } catch (error) {
       console.error(error);
       toast.error("Something went wrong");
