@@ -2,10 +2,10 @@
 
 import {useAtomValue, useSetAtom} from "jotai";
 import {LoaderIcon} from "lucide-react";
-import {errorMessageAtom, loadingMessageAtom, organizationIdAtom} from "@/modules/widget/atoms/widget-atoms";
+import {errorMessageAtom, loadingMessageAtom, organizationIdAtom, widgetSettingsAtom} from "@/modules/widget/atoms/widget-atoms";
 import { WidgetHeader } from "../components/widget-header";
 import { useEffect, useState } from "react";
-import { useAction, useMutation } from "convex/react";
+import { useAction, useMutation, useQuery } from "convex/react";
 import {api} from "@workspace/backend/_generated/api";
 import { screenAtom, contactSessionIdAtomFamily } from "@/modules/widget/atoms/widget-atoms";
 
@@ -17,6 +17,7 @@ export const WidgetLoadingScreen = ({organizationId}: {organizationId: string | 
     const [sessionValid, setSessionValid] = useState(false);
 
     const loadingMessage = useAtomValue(loadingMessageAtom);
+    const setWidgetSettings = useSetAtom(widgetSettingsAtom);
     const setOrganizationId = useSetAtom(organizationIdAtom);
     const setLoadingMessage = useSetAtom(loadingMessageAtom);
     const setErrorMessage = useSetAtom(errorMessageAtom);
@@ -74,7 +75,7 @@ export const WidgetLoadingScreen = ({organizationId}: {organizationId: string | 
 
         if(!contactSessionId){
             setSessionValid(false);
-            setStep("done");
+            setStep("settings");
             return;
         }
 
@@ -83,13 +84,37 @@ export const WidgetLoadingScreen = ({organizationId}: {organizationId: string | 
         validateContactSession({contactSessionId})
             .then((result) => {
                 setSessionValid(result.valid);
-                setStep("done");
+                setStep("settings");
             })
             .catch(() => {
                 setSessionValid(false);
-                setStep("done");
+                setStep("settings");
             })
     }, [step, contactSessionId, validateContactSession, setLoadingMessage]);
+
+    const widgetSettings = useQuery(api.public.widgetSettings.getByOrganizationId, 
+        organizationId ? {
+            organizationId,
+        }: "skip"
+    );
+
+    useEffect(() => {
+        if(step !== "settings") {
+            return;
+        }
+
+        setLoadingMessage("Loading widget settings...");
+        if(widgetSettings !== undefined) {
+            setWidgetSettings(widgetSettings);
+            setStep("done");
+        }
+    }, [
+        step,
+        widgetSettings,
+        setLoadingMessage,
+        setWidgetSettings,
+        setStep,
+    ]);
 
     useEffect(() => {
         if(step !== "done") {
@@ -103,7 +128,7 @@ export const WidgetLoadingScreen = ({organizationId}: {organizationId: string | 
     return (
         <>
             <WidgetHeader>
-                <div className="flex flex-col justify-between gap-y-2 px-2 px-6 font-semibold">
+                <div className="flex flex-col justify-between gap-y-2  px-6 font-semibold">
                 <p className="text-3xl">
                     Hi there!👋
                 </p>
