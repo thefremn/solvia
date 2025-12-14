@@ -13,5 +13,7 @@ export const errorMessageAtom = atom<string | null>(null);
 export const loadingMessageAtom = atom<string | null>(null);
 export const conversationIdAtom = atom<Id<"conversations"> | null>(null);
 export const widgetSettingsAtom = atom<Doc<"widgetSettings"> | null>(null);
-
-
+export const vapiSecretsAtom = atom<{
+    publicApiKey: string;
+} | null>(null);
+export const hasVapiSecretsAtom = atom((get) => get(vapiSecretsAtom) !== null);
