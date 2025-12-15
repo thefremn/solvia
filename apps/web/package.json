@@ -24,6 +24,7 @@
     "@workspace/math": "workspace:*",
     "@workspace/ui": "workspace:*",
     "ai": "4.3.19",
+    "bowser": "^2.13.1",
     "convex": "1.25.4",
     "countries-and-timezones": "^3.8.0",
     "date-fns": "4.1.0",
