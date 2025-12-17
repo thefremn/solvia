@@ -2,7 +2,7 @@ import { mutation, query } from "../_generated/server";
 import { v, ConvexError } from "convex/values";
 import { supportAgent } from "../system/ai/agents/supportAgent";
 import { saveMessage } from "@convex-dev/agent";
-import { components } from "../_generated/api";
+import { components, internal } from "../_generated/api";
 import { paginationOptsValidator } from "convex/server";
 import { MessageDoc } from "@convex-dev/agent";
 
@@ -113,6 +113,11 @@ export const create = mutation({
         message: "Invalid session",
       });
     }
+
+    await ctx.runMutation(internal.system.contactSessions.refresh, {
+      contactSessionId: args.contactSessionId
+    })
+
     const widgetSettings = await ctx.db
       .query("widgetSettings")
       .withIndex("by_organization_id", (q) =>
