@@ -24,6 +24,7 @@
     "convex": "1.25.4",
     "convex-helpers": "^0.1.106",
     "react-dropzone": "^14.3.8",
+    "svix": "^1.82.0",
     "zod": "3.25.67"
   }
 }
