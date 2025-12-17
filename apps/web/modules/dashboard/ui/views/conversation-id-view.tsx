@@ -37,6 +37,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { DicebearAvatar } from "@workspace/ui/components/dicebear-avatar";
 import { ConversationStatusButton } from "../components/conversation-status-button";
+import { toast } from "sonner";
 
 const formSchema = z.object({
   message: z.string().min(1, "Message is required"),
@@ -205,6 +206,7 @@ export const ConversationIdView = ({
                       const enhanced = await enhanceMsg({ prompt: original });
                       form.setValue("message", enhanced); // <-- Fix: updates the controlled textarea
                     } catch (error) {
+                      toast.error("Something went wrong");
                       console.error("Enhance error:", error);
                     }
                   }}
