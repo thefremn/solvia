@@ -131,33 +131,20 @@ export const getMany = query({
     handler: async (ctx, args) => {
     const identity = await ctx.auth.getUserIdentity();
         if(!identity) {
-            throw new ConvexError({
-                code:"UNAUTHORIZED",
-                message:"Identity not found",
-            }
-            );
+            return {page: [], isDone: true, continueCursor: null}; // Return empty result instead of throwing
         }
         const orgId = identity.orgId as string ;
         if(!orgId) {
-            throw new ConvexError({
-                code:"UNAUTHORIZED",
-                message:"Organization ID not found",
-            });
+            return {page: [], isDone: true, continueCursor: null}; // Return empty result instead of throwing
         }
         const conversation = await ctx.db
         .query("conversations")
         .withIndex("by_thread_id", (q) => q.eq("threadId", args.threadId)).unique();
         if(!conversation) {
-            throw new ConvexError({
-                code: "NOT_FOUND",
-                message: "Conversation not found",
-            });
+            return {page: [], isDone: true, continueCursor: null}; // Return empty result instead of throwing
         }
          if(conversation.organizationId !== orgId) {
-                throw new ConvexError({
-                    code: "UNAUTHORIZED",
-                    message: "Organization ID not found",
-                });
+                return {page: [], isDone: true, continueCursor: null}; // Return empty result instead of throwing
             }
         const paginated = await supportAgent.listMessages(ctx, {
             threadId: args.threadId,

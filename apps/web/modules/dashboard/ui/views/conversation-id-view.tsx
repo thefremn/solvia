@@ -114,10 +114,10 @@ export const ConversationIdView = ({
   };
 
   return (
-    <div className="flex h-full flex-col bg-muted">
+    <div className="flex h-full flex-col bg-muted overflow-hidden">
 
       {/* HEADER */}
-      <header className="flex items-center justify-between border-b bg-background p-2.5">
+      <header className="flex items-center justify-between border-b bg-background p-2.5 shrink-0">
         <Button size="sm" variant="ghost">
           <MoreHorizontalIcon />
         </Button>
@@ -134,7 +134,7 @@ export const ConversationIdView = ({
       </header>
 
       {/* MESSAGES */}
-      <AIConversation className="max-h-[calc(100vh-180px)]">
+      <AIConversation className="flex-1 min-h-0">
         <AIConversationContent>
           {toUIMessages(messages.results ?? []).map((message) => (
             <AIMessage
@@ -159,7 +159,7 @@ export const ConversationIdView = ({
       </AIConversation>
 
       {/* INPUT */}
-      <div className="p-2">
+      <div className="p-2 shrink-0">
         <Form {...form}>
           <AIInput onSubmit={form.handleSubmit(onSubmit)}>
 

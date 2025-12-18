@@ -48,18 +48,11 @@ export const getOne = query({
     handler: async (ctx, args) => {
         const identity = await ctx.auth.getUserIdentity();
                 if(!identity) {
-                    throw new ConvexError({
-                        code:"UNAUTHORIZED",
-                        message:"Identity not found",
-                    }
-                    );
+                    return null; // Return null instead of throwing for queries
                 }
                 const orgId = identity.orgId as string ;
                 if(!orgId) {
-                    throw new ConvexError({
-                        code:"UNAUTHORIZED",
-                        message:"Organization ID not found",
-                    });
+                    return null; // Return null instead of throwing
                 }
         
                 return await ctx.db
