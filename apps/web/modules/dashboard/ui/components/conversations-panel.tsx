@@ -6,11 +6,11 @@ import { Select,
      SelectItem,
      SelectTrigger,
      SelectValue,
- } from "@workspace/ui/components/select";
+} from "@workspace/ui/components/select";
 import { DicebearAvatar } from "@workspace/ui/components/dicebear-avatar";
 import { ScrollArea } from "@workspace/ui/components/scroll-area"; 
 import { ListIcon,ArrowRightIcon,ArrowUpIcon,CheckIcon,CornerUpLeftIcon } from "lucide-react";
-import { usePaginatedQuery } from "convex/react";
+import { usePaginatedQuery, Authenticated, AuthLoading } from "convex/react";
 import { api } from "@workspace/backend/_generated/api";
 import { getCountryFlagUrl, getCountryFromTimezone } from "@/lib/country-utils";
 import Link from "next/link";
@@ -23,9 +23,25 @@ import { statusFilterAtom } from "../../atoms";
 import { useInfiniteScroll } from "@workspace/ui/hooks/use-infinite-scroll";
 import {InfiniteScrollTrigger} from "@workspace/ui/components/infinite-scroll-trigger";
 import { Skeleton } from "@workspace/ui/components/skeleton";
+import { Loader2Icon } from "lucide-react";
 
 
 export const ConversationsPanel = () => {
+    return (
+        <>
+            <AuthLoading>
+                <div className="flex h-full items-center justify-center">
+                    <Loader2Icon className="text-muted-foreground animate-spin" />
+                </div>
+            </AuthLoading>
+            <Authenticated>
+                <ConversationsPanelContent />
+            </Authenticated>
+        </>
+    );
+};
+
+const ConversationsPanelContent = () => {
     const pathname = usePathname();
 
     const statusFilter = useAtomValue(statusFilterAtom);

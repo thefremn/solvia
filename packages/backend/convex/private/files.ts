@@ -167,18 +167,11 @@ export const list = query({
     handler: async (ctx, args) => {
         const identity = await ctx.auth.getUserIdentity();
                 if(!identity) {
-                    throw new ConvexError({
-                        code:"UNAUTHORIZED",
-                        message:"Identity not found",
-                    }
-                    );
+                    return {page: [], isDone: true, continueCursor: ""}; // Return empty result instead of throwing
                 }
                 const orgId = identity.orgId as string ;
                 if(!orgId) {
-                    throw new ConvexError({
-                        code:"UNAUTHORIZED",
-                        message:"Organization ID not found",
-                    });
+                    return {page: [], isDone: true, continueCursor: ""}; // Return empty result instead of throwing
                 }
         
         const namespace = await rag.getNamespace(ctx, {
