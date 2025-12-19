@@ -81,7 +81,7 @@ export const WidgetVoiceScreen = () => {
                                 className="w-full"
                                 size="lg"
                                 variant="destructive"
-                                onClick={() => endCall}
+                                onClick={endCall}
                             >
                                 <MicOffIcon />
                                 End call
@@ -91,7 +91,7 @@ export const WidgetVoiceScreen = () => {
                                 className="w-full"
                                 disabled={isConnecting}
                                 size="lg"
-                                onClick={() => startCall}
+                                onClick={startCall}
                             >
                                 <MicIcon />
                                 Start call

@@ -69,7 +69,7 @@ export const useVapi = () => {
             vapiInstance?.stop();
         }
 
-    }, []);
+    }, [vapiSecrets]);
 
     const startCall = () => {
 
