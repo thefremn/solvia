@@ -67,7 +67,7 @@ Every query scopes data by `organizationId` read from the Clerk JWT (`ctx.auth.o
 pnpm install
 ```
 
-Each app/package that needs environment variables reads from its own `.env.local`:
+Each app/package that needs environment variables reads from its own `.env.local` — copy the matching `.env.example` to get started:
 
 - `apps/web/.env.local` — Convex URL, Clerk keys, Sentry auth token
 - `apps/widget/.env.local` — Convex URL
