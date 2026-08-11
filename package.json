@@ -11,8 +11,8 @@
   "devDependencies": {
     "@workspace/eslint-config": "workspace:*",
     "@workspace/typescript-config": "workspace:*",
-    "prettier": "^3.6.2",
-    "turbo": "^2.5.5",
+    "prettier": "^3.9.6",
+    "turbo": "^2.10.9",
     "typescript": "5.7.3"
   },
   "packageManager": "pnpm@10.24.0",
@@ -20,15 +20,18 @@
     "node": ">=20"
   },
   "dependencies": {
-    "react-dropzone": "^14.3.8",
-    "react-hook-form": "^7.66.1"
+    "react-dropzone": "^14.4.1",
+    "react-hook-form": "^7.85.0"
   },
   "pnpm": {
     "overrides": {
       "@types/react": "19.2.18",
       "@types/react-dom": "19.2.4",
       "react": "19.2.8",
-      "react-dom": "19.2.8"
+      "react-dom": "19.2.8",
+      "postcss": "^8.5.23",
+      "sharp": "^0.35.3",
+      "webpack": "^5.104.1"
     }
   }
 }

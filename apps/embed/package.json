@@ -3,17 +3,16 @@
     "version": "0.0.1",
     "type": "module",
     "private": true,
-
     "scripts": {
         "dev": "vite --port 3002",
         "build": "vite build"
     },
     "devDependencies": {
-        "@types/node": "^20.19.9",
+        "@types/node": "^20.19.43",
         "@workspace/eslint-config": "workspace:^",
         "@workspace/typescript-config": "workspace:*",
-        "eslint": "^9.32.0",
-        "typescript": "^5.9.2",
-        "vite": "^5.0.8"
+        "eslint": "^9.39.5",
+        "typescript": "^5.9.3",
+        "vite": "^6.4.3"
     }
 }
