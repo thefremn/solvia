@@ -27,6 +27,25 @@ This is a pnpm + Turborepo monorepo:
 
 Convex functions in `packages/backend/convex` are split by trust boundary — see the README's [architecture section](./README.md#project-structure) before adding a new one, since it determines whether it belongs in `private/`, `public/`, or `system/`.
 
+## Deployment
+
+The frontend (`apps/web`, `apps/widget`) and the backend (`packages/backend`) deploy through **two separate paths** — this isn't the usual one-button setup, so it's worth understanding before you touch anything backend-related.
+
+**Frontend: automatic.** Vercel builds and deploys `apps/web` and `apps/widget` on every push/PR (Preview) and merge to `main` (Production), using its own Turborepo-aware build command.
+
+**Backend: manual.** Changes under `packages/backend/convex/` need someone to run this by hand, from a real machine (not Vercel's build container):
+
+```bash
+cd packages/backend
+npx convex deploy
+```
+
+Why: we tried wiring this into Vercel's build (`npx convex deploy --cmd 'pnpm build'`), but it turned out to be unreliable specifically inside Vercel's build container — deploy-key-authenticated pushes there would silently report success while pushing an empty function set (Convex's CLI needs a temp directory on the same filesystem as the project to bundle functions, and Vercel's container doesn't consistently provide that). Manual deploys from a normal machine don't have this problem, so that's the actual production deploy path for the backend until Convex resolves it.
+
+**Practically:** if your PR touches `packages/backend/convex/`, after it merges, run `npx convex deploy` yourself (or ask whoever's around to). Preview and Production currently share one Convex backend — there's no isolated per-PR backend — so this manual deploy is what both environments run against.
+
+**Auth note:** `packages/backend/convex/auth.config.ts` trusts two Clerk instances — production (used everywhere except Preview) and a Clerk Development instance (used by Vercel Preview builds, since Clerk's production instance won't recognize arbitrary preview URLs as valid origins). Since Preview and Production share one backend, both issuers need to stay listed there, or one of the two environments' sign-ins will fail Convex's auth check even though Clerk itself succeeds.
+
 ## Before opening a PR
 
 There's no automated test suite yet, so please verify your change manually:
