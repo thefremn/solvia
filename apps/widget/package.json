@@ -22,6 +22,7 @@
     "@workspace/ui": "workspace:*",
     "ai": "4.3.19",
     "convex": "1.25.4",
+    "convex-helpers": "0.1.110",
     "date-fns": "^4.4.0",
     "jotai": "^2.20.2",
     "lucide-react": "^0.475.0",

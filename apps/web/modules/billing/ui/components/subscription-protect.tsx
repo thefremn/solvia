@@ -1,6 +1,5 @@
 "use client";
 
-import { useOrganization } from "@clerk/nextjs";
 import { useQuery } from "convex/react";
 import { Authenticated, AuthLoading } from "convex/react";
 import { api } from "@workspace/backend/_generated/api";
@@ -28,11 +27,7 @@ export const SubscriptionProtect = ({ children }: SubscriptionProtectProps) => {
 };
 
 const SubscriptionProtectContent = ({ children }: { children: React.ReactNode }) => {
-    const { organization } = useOrganization();
-    const subscription = useQuery(
-        api.public.subscriptions.getSubscription,
-        organization?.id ? { organizationId: organization.id } : "skip"
-    );
+    const subscription = useQuery(api.private.subscriptions.getOne);
 
     const isPro = subscription?.status === "active";
 
