@@ -109,3 +109,5 @@ Contributions are welcome — see [CONTRIBUTING.md](./CONTRIBUTING.md) for setup
 ## License
 
 [MIT](./LICENSE)
+
+<!-- test: verifying the clean workflow (build command reverted, deploy keys removed) and Clerk preview auth -->
