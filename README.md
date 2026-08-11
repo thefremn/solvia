@@ -109,3 +109,5 @@ Contributions are welcome — see [CONTRIBUTING.md](./CONTRIBUTING.md) for setup
 ## License
 
 [MIT](./LICENSE)
+
+<!-- test: verifying CI + Vercel preview deployment pipeline -->
