@@ -6,7 +6,7 @@ import { useQuery, useAction } from "convex/react";
 import { useAtomValue, useSetAtom } from "jotai";
 import { api } from "@workspace/backend/_generated/api";
 import { contactSessionIdAtomFamily, conversationIdAtom, organizationIdAtom, screenAtom, widgetSettingsAtom } from "../../atoms/widget-atoms";
-import { AIConversation, AIConversationContent, AIConversationScrollButton } from "@workspace/ui/components/ai/conversation";
+import { AIConversation, AIConversationContent } from "@workspace/ui/components/ai/conversation";
 import {AIMessage, AIMessageContent} from "@workspace/ui/components/ai/message";
 import { AIResponse } from "@workspace/ui/components/ai/response";
 import { AISuggestion, AISuggestions } from "@workspace/ui/components/ai/suggestion";

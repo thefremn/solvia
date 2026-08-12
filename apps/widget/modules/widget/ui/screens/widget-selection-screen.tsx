@@ -1,7 +1,7 @@
 "use client";
 
 import {useAtomValue, useSetAtom} from "jotai";
-import {AlertTriangleIcon, ChevronRightIcon, MessageSquareTextIcon, MicIcon, PhoneIcon} from "lucide-react";
+import { ChevronRightIcon, MessageSquareTextIcon, MicIcon, PhoneIcon } from "lucide-react";
 import {conversationIdAtom, errorMessageAtom, hasVapiSecretsAtom, widgetSettingsAtom} from "@/modules/widget/atoms/widget-atoms";
 import { WidgetHeader } from "../components/widget-header";
 import { Button } from "@workspace/ui/components/button";
