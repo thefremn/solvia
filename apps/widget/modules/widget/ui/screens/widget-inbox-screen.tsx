@@ -1,8 +1,8 @@
 "use client";
 
-import {useAtom, useAtomValue, useSetAtom} from "jotai";
-import {AlertTriangleIcon, ArrowLeftIcon} from "lucide-react";
-import {contactSessionIdAtomFamily, conversationIdAtom, errorMessageAtom, organizationIdAtom, screenAtom} from "@/modules/widget/atoms/widget-atoms";
+import { useAtomValue, useSetAtom } from "jotai";
+import { ArrowLeftIcon } from "lucide-react";
+import { contactSessionIdAtomFamily, conversationIdAtom, organizationIdAtom, screenAtom } from "@/modules/widget/atoms/widget-atoms";
 import { WidgetHeader } from "../components/widget-header";
 import { WidgetFooter } from "../components/widget-footer";
 import { Button } from "@workspace/ui/components/button";

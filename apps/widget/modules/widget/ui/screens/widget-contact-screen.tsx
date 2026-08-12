@@ -1,19 +1,8 @@
-import { ArrowLeftIcon, MicIcon, MicOffIcon, PhoneIcon, CheckIcon, CopyIcon } from "lucide-react";
+import { ArrowLeftIcon, PhoneIcon, CheckIcon, CopyIcon } from "lucide-react";
 import { Button } from "@workspace/ui/components/button";
-import {
-    AIConversation,
-    AIConversationContent,
-    AIConversationScrollButton,
-} from "@workspace/ui/components/ai/conversation";
-import{
-    AIMessage,
-    AIMessageContent,
-} from "@workspace/ui/components/ai/message";
-import { useVapi } from "../../hooks/use-vapi";
 import { WidgetHeader } from "../components/widget-header";
 import { useAtomValue, useSetAtom } from "jotai";
 import { screenAtom, widgetSettingsAtom } from "../../atoms/widget-atoms";
-import { cn } from "@workspace/ui/lib/utils";
 import { useState } from "react";
 import Link from "next/link";
 
