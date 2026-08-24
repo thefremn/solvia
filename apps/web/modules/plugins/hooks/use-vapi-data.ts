@@ -45,7 +45,7 @@ export const useVapiAssistants = (): {
         return () => {
             cancelled = true;
         }
-    }, []);
+    }, [getAssistants]);
 
     return {data, isLoading, error};
 };
@@ -77,7 +77,7 @@ export const useVapiPhoneNumbers = (): {
         };
 
         fetchData();
-    }, []);
+    }, [getPhoneNumbers]);
 
     return {data, isLoading, error};
 };
