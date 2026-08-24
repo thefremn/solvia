@@ -146,6 +146,8 @@ export const WidgetLoadingScreen = ({organizationId}: {organizationId: string | 
         setVapiSecrets,
         setLoadingMessage,
         setStep,
+        setErrorMessage,
+        setScreen
     ]);
 
     useEffect(() => {
