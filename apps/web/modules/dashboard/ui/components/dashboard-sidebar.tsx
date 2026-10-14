@@ -1,185 +1,262 @@
-"use client"
+"use client";
 
-import { OrganizationSwitcher, UserButton } from "@clerk/nextjs"
-import { CreditCardIcon, 
-    InboxIcon, 
-    LayoutDashboardIcon, 
-    LibraryBigIcon, 
-    Mic, 
-    PaletteIcon } from "lucide-react"
+import { OrganizationSwitcher, UserButton } from "@clerk/nextjs";
+import {
+  ChevronLeft,
+  ChevronRight,
+  CreditCardIcon,
+  InboxIcon,
+  LayoutDashboardIcon,
+  LibraryBigIcon,
+  Mic,
+  PaletteIcon,
+} from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
-import { Sidebar, 
-    SidebarContent, 
-    SidebarFooter, 
-    SidebarGroup, 
-    SidebarGroupContent, 
-    SidebarGroupLabel,
-    SidebarHeader,
-    SidebarMenu,
-    SidebarMenuButton,
-    SidebarMenuItem,
-    SidebarRail
- } from "@workspace/ui/components/sidebar";
+import { Button } from "@workspace/ui/components/button";
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarGroupLabel,
+  SidebarHeader,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarRail,
+  useSidebar,
+} from "@workspace/ui/components/sidebar";
 import { cn } from "@workspace/ui/lib/utils";
 import { usePathname } from "next/navigation";
 
-const customerSupportItems = [
-    {
-        title: "Conversations",
-        url: "/conversations",
-        icon: InboxIcon,
-    },
-    {
-        title: "Knowledge Base",
-        url: "/files",
-        icon: LibraryBigIcon,
-    },
+type NavBadge = {
+  label: string;
+  tone: "neutral" | "pending";
+};
+
+const BADGE_STYLES: Record<NavBadge["tone"], string> = {
+  // DESIGN.md 1.2 status colour map
+  neutral: "bg-slate-100 text-slate-600",
+  pending: "bg-amber-100 text-amber-700",
+};
+
+type NavItem = {
+  title: string;
+  url: string;
+  icon: typeof InboxIcon;
+  badge?: NavBadge;
+};
+
+const customerSupportItems: NavItem[] = [
+  {
+    title: "Conversations",
+    url: "/conversations",
+    icon: InboxIcon,
+  },
+  {
+    title: "Knowledge Base",
+    url: "/files",
+    icon: LibraryBigIcon,
+  },
 ];
 
-const configurationItems = [
-    {
-        title: "Widget Customization",
-        url: "/customization",
-        icon: PaletteIcon,
-    },
-    {
-        title: "Integrations",
-        url: "/integrations",
-        icon: LayoutDashboardIcon,
-    },
-    {
-        title: "Voice Assistant",
-        url: "/plugins/vapi",
-        icon: Mic,
-    },
+const configurationItems: NavItem[] = [
+  {
+    title: "Widget Customization",
+    url: "/customization",
+    icon: PaletteIcon,
+  },
+  {
+    title: "Integrations",
+    url: "/integrations",
+    icon: LayoutDashboardIcon,
+  },
+  {
+    title: "Voice Assistant",
+    url: "/plugins/vapi",
+    icon: Mic,
+  },
 ];
 
-const accountItems = [
-    {
-        title: "Plans & Billing",
-        url: "/billing",
-        icon: CreditCardIcon,
-    }
-]
+const accountItems: NavItem[] = [
+  {
+    title: "Plans & Billing",
+    url: "/billing",
+    icon: CreditCardIcon,
+  },
+];
+
+const navGroups = [
+  { label: "Customer Support", items: customerSupportItems },
+  { label: "Configuration", items: configurationItems },
+  { label: "Account", items: accountItems },
+];
+
+const SidebarCollapseToggle = ({
+  direction,
+  className,
+}: {
+  direction: "collapse" | "expand";
+  className?: string;
+}) => {
+  const { toggleSidebar } = useSidebar();
+  return (
+    <Button
+      variant="ghost"
+      size="icon-sm"
+      onClick={toggleSidebar}
+      aria-label={
+        direction === "collapse" ? "Collapse Sidebar" : "Expand Sidebar"
+      }
+      className={cn(
+        "text-[#475569] hover:bg-[#F1F5F9] hover:text-[#0F2D52]",
+        className,
+      )}
+    >
+      {direction === "collapse" ? <ChevronLeft /> : <ChevronRight />}
+    </Button>
+  );
+};
 
 export const DashboardSidebar = () => {
-    const pathname = usePathname();
-    const isActive = (url: string) => {
-        if(url === "/"){
-            return pathname === "/";
-        }
-        return pathname.startsWith(url);
+  const pathname = usePathname();
+  const isActive = (url: string) => {
+    if (url === "/") {
+      return pathname === "/";
     }
-    return (
-        <Sidebar className="group" collapsible="icon">
-            <SidebarHeader>
-                <SidebarMenu>
-                    <SidebarMenuItem>
-                        <SidebarMenuButton asChild size="lg">
-                            <OrganizationSwitcher hidePersonal 
-                            skipInvitationScreen 
-                            appearance={{
-                                elements: {
-                                    rootBox: "w-full! h-8!",
-                                    avatarBox: "size-4! rounded-sm",
-                                    organizationSwitcherTrigger: "w-full! justify-start! group-data-[collapsible=icon]:size-8! group-data-[collapsible=icon]:p-2!",
-                                    organizationPreview: "group-data-[collapsible=icon]:justify-center! gap-2!",
-                                    organizationPreviewTextContainer: "group-data-[collapsible=icon]:hidden! text-xs font-medium! text-sidebar-foreground!",
-                                    organizationSwitcherTriggerIcon: "group-data-[collapsible=icon]:hidden! ml-auto! text-sidebar-foreground!"
-                                }
-                            }} 
-                            />
-                        </SidebarMenuButton>
+    return pathname.startsWith(url);
+  };
+
+  return (
+    <Sidebar className="group" collapsible="icon">
+      <SidebarHeader className="flex flex-col gap-3">
+        <div className="flex items-center gap-2 px-1 group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-0">
+          <Link
+            href="/conversations"
+            className="flex items-center gap-2"
+            aria-label="Solvia home"
+          >
+            <Image src="/logo.svg" alt="Solvia logo" width={24} height={24} />
+            <span className="text-base font-bold tracking-tight text-[#0F172A] group-data-[collapsible=icon]:hidden">
+              Solvia
+            </span>
+          </Link>
+          <SidebarCollapseToggle
+            direction="collapse"
+            className="ml-auto group-data-[collapsible=icon]:hidden"
+          />
+        </div>
+        <div className="hidden justify-center group-data-[collapsible=icon]:flex">
+          <SidebarCollapseToggle direction="expand" />
+        </div>
+        <div className="rounded-md border border-[#E2E8F0] bg-white group-data-[collapsible=icon]:border-transparent group-data-[collapsible=icon]:bg-transparent">
+          <SidebarMenu>
+            <SidebarMenuItem>
+              <SidebarMenuButton asChild size="lg">
+                <OrganizationSwitcher
+                  hidePersonal
+                  skipInvitationScreen
+                  appearance={{
+                    elements: {
+                      rootBox: "w-full! h-10!",
+                      avatarBox: "size-6! rounded-md",
+                      organizationSwitcherTrigger:
+                        "w-full! justify-start! rounded-md! px-2! hover:bg-[#F1F5F9]! group-data-[collapsible=icon]:size-8! group-data-[collapsible=icon]:p-2!",
+                      organizationPreview:
+                        "group-data-[collapsible=icon]:justify-center! gap-2!",
+                      organizationPreviewTextContainer:
+                        "group-data-[collapsible=icon]:hidden! text-sm! font-semibold! text-[#0F172A]!",
+                      organizationSwitcherTriggerIcon:
+                        "group-data-[collapsible=icon]:hidden! ml-auto! text-[#475569]!",
+                    },
+                  }}
+                />
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          </SidebarMenu>
+        </div>
+      </SidebarHeader>
+      <SidebarContent>
+        {navGroups.map((group) => (
+          <SidebarGroup key={group.label}>
+            <SidebarGroupLabel className="text-[11px] font-semibold tracking-wide text-[#475569] uppercase">
+              {group.label}
+            </SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu className="flex flex-col gap-1">
+                {group.items.map((item) => {
+                  const active = isActive(item.url);
+                  return (
+                    <SidebarMenuItem key={item.title}>
+                      <SidebarMenuButton
+                        asChild
+                        isActive={active}
+                        tooltip={item.title}
+                        className={cn(
+                          "h-10 rounded-md text-sm text-[#475569] transition-colors duration-150 ease-out hover:bg-[#F1F5F9] hover:text-[#0F172A]",
+                          active &&
+                            "bg-[#EBF5FF] font-semibold text-[#0F2D52] hover:bg-[#EBF5FF] hover:text-[#0F2D52]",
+                        )}
+                      >
+                        <Link href={item.url} className="relative">
+                          <span
+                            aria-hidden
+                            className={cn(
+                              "absolute top-1/2 -left-2 hidden h-5 w-[3px] -translate-y-1/2 rounded-full group-data-[collapsible=icon]:block",
+                              active ? "bg-[#127CDD]" : "bg-transparent",
+                            )}
+                          />
+                          <item.icon
+                            className={cn(
+                              "size-[18px] shrink-0",
+                              active ? "text-[#127CDD]" : "text-[#475569]",
+                            )}
+                          />
+                          <span className="truncate">{item.title}</span>
+                          {item.badge && (
+                            <span
+                              className={cn(
+                                "ml-auto rounded-full px-2.5 py-0.5 text-xs font-semibold group-data-[collapsible=icon]:hidden",
+                                BADGE_STYLES[item.badge.tone],
+                              )}
+                            >
+                              {item.badge.label}
+                            </span>
+                          )}
+                        </Link>
+                      </SidebarMenuButton>
                     </SidebarMenuItem>
-                </SidebarMenu>
-            </SidebarHeader>
-            <SidebarContent>
-                <SidebarGroup>
-                    <SidebarGroupLabel>
-                        Customer Support
-                    </SidebarGroupLabel>
-                    <SidebarGroupContent>
-                        <SidebarMenu>
-                            {customerSupportItems.map((item) => (
-                                <SidebarMenuItem key={item.title}>
-                                    <SidebarMenuButton asChild 
-                                    isActive={isActive(item.url)} 
-                                    className={cn(isActive(item.url) && "bg-gradient-to-b from-sidebar-primary to-[#0b63f3]! text-sidebar-primary-foreground! hover:to-[#0b63f3]/90!")} 
-                                    tooltip={item.title}>
-                                        <Link href={item.url}>
-                                            <item.icon className="size-4" />
-                                            <span>{item.title}</span>
-                                        </Link>
-                                    </SidebarMenuButton>
-                                </SidebarMenuItem>
-                            ))}
-                        </SidebarMenu>
-                    </SidebarGroupContent>
-                </SidebarGroup>
-                <SidebarGroup>
-                    <SidebarGroupLabel>
-                        Configuration
-                    </SidebarGroupLabel>
-                    <SidebarGroupContent>
-                        <SidebarMenu>
-                            {configurationItems.map((item) => (
-                                <SidebarMenuItem key={item.title}>
-                                    <SidebarMenuButton asChild 
-                                    isActive={isActive(item.url)} 
-                                    className={cn(isActive(item.url) && "bg-gradient-to-b from-sidebar-primary to-[#0b63f3]! text-sidebar-primary-foreground! hover:to-[#0b63f3]/90!")} 
-                                    tooltip={item.title}>
-                                        <Link href={item.url}>
-                                            <item.icon className="size-4" />
-                                            <span>{item.title}</span>
-                                        </Link>
-                                    </SidebarMenuButton>
-                                </SidebarMenuItem>
-                            ))}
-                        </SidebarMenu>
-                    </SidebarGroupContent>
-                </SidebarGroup>
-                <SidebarGroup>
-                    <SidebarGroupLabel>
-                        Account
-                    </SidebarGroupLabel>
-                    <SidebarGroupContent>
-                        <SidebarMenu>
-                            {accountItems.map((item) => (
-                                <SidebarMenuItem key={item.title}>
-                                    <SidebarMenuButton asChild 
-                                    isActive={isActive(item.url)}
-                                    className={cn(isActive(item.url) && "bg-gradient-to-b from-sidebar-primary to-[#0b63f3]! text-sidebar-primary-foreground! hover:to-[#0b63f3]/90!")}  
-                                    tooltip={item.title}>
-                                        <Link href={item.url}>
-                                            <item.icon className="size-4" />
-                                            <span>{item.title}</span>
-                                        </Link>
-                                    </SidebarMenuButton>
-                                </SidebarMenuItem>
-                            ))}
-                        </SidebarMenu>
-                    </SidebarGroupContent>
-                </SidebarGroup>
-            </SidebarContent>
-            <SidebarFooter>
-                <SidebarMenu>
-                    <SidebarMenuItem>
-                        <UserButton 
-                        showName
-                        appearance={{
-                            elements: {
-                                rootBox: "w-full! h-8!",
-                                userButtonTrigger: "w-full! p-2! hover:bg-sidebar-accent! hover:text-sidebar-accent-foreground! group-data-[collapsible=icon]:size-8! group-data-[collapsible=icon]:p-2!",
-                                userButtonBox: "w-full! flex-row-reverse! justify-end! gap-2! group-data-[collapsible=icon]: justify-centre! text-sidebar-foreground!",
-                                userButtonOuterIdentifier: "pl-0! group-data-[collapsible=icon]:hidden!",
-                                avatarBox: "size-4!"
-                            }
-                        }} 
-                        />
-                    </SidebarMenuItem>
-                </SidebarMenu>
-            </SidebarFooter>
-            <SidebarRail />
-        </Sidebar>
-    );
-}
+                  );
+                })}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        ))}
+      </SidebarContent>
+      <SidebarFooter className="border-t border-[#E2E8F0]">
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <UserButton
+              showName
+              appearance={{
+                elements: {
+                  rootBox: "w-full! h-10!",
+                  userButtonTrigger:
+                    "w-full! rounded-md! p-2! hover:bg-[#F1F5F9]! group-data-[collapsible=icon]:size-8! group-data-[collapsible=icon]:p-2!",
+                  userButtonBox:
+                    "w-full! flex-row-reverse! justify-end! gap-2! text-[#0F172A]! group-data-[collapsible=icon]:justify-center!",
+                  userButtonOuterIdentifier:
+                    "pl-0! text-sm! font-semibold! group-data-[collapsible=icon]:hidden!",
+                  avatarBox: "size-6! rounded-full",
+                },
+              }}
+            />
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarFooter>
+      <SidebarRail />
+    </Sidebar>
+  );
+};

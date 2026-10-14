@@ -1,6 +1,11 @@
 "use client";
 
-import { GlobeIcon ,PhoneIcon,PhoneCallIcon,WorkflowIcon } from "lucide-react";
+import {
+  GlobeIcon,
+  PhoneIcon,
+  PhoneCallIcon,
+  WorkflowIcon,
+} from "lucide-react";
 import { PluginCard } from "../components/plugin-card";
 import { api } from "@workspace/backend/_generated/api";
 import { useQuery } from "convex/react";
@@ -18,14 +23,14 @@ import {
   FormControl,
   FormField,
   FormItem,
-  FormMessage
+  FormMessage,
 } from "@workspace/ui/components/form";
 import { Input } from "@workspace/ui/components/input";
 import { Label } from "@workspace/ui/components/label";
-import {z} from "zod";
-import {useForm} from "react-hook-form";
-import {zodResolver} from "@hookform/resolvers/zod";
-import {toast} from "sonner";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "sonner";
 import { Button } from "@workspace/ui/components/button";
 import { useState } from "react";
 import { VapiConnectedView } from "../components/vapi-connected-view";
@@ -54,16 +59,16 @@ const vapiFeature = [
 ];
 
 const formSchema = z.object({
-  publicApiKey: z.string().min(1, {message: "Public API key is required"}),
-  privateApiKey: z.string().min(1, {message: "Private API key is required"}),
+  publicApiKey: z.string().min(1, { message: "Public API key is required" }),
+  privateApiKey: z.string().min(1, { message: "Private API key is required" }),
 });
 
 const VapiPluginForm = ({
   open,
   setOpen,
-} : {
+}: {
   open: boolean;
-  setOpen: (value: boolean) => void
+  setOpen: (value: boolean) => void;
 }) => {
   const upsertSecret = useMutation(api.private.secrets.upsert);
   const form = useForm<z.infer<typeof formSchema>>({
@@ -75,13 +80,13 @@ const VapiPluginForm = ({
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    try{
+    try {
       await upsertSecret({
         service: "vapi",
         value: {
           publicApiKey: values.publicApiKey,
           privateApiKey: values.privateApiKey,
-        }
+        },
       });
       setOpen(false);
       toast.success("Vapi secret created");
@@ -93,29 +98,33 @@ const VapiPluginForm = ({
 
   return (
     <Dialog onOpenChange={setOpen} open={open}>
-      <DialogContent>
+      <DialogContent className="border-[#E2E8F0] bg-white">
         <DialogHeader>
-          <DialogTitle>Enable Vapi</DialogTitle>
+          <DialogTitle className="text-[#0F172A]">Enable Vapi</DialogTitle>
         </DialogHeader>
-        <DialogDescription>
-          Your API keys are safely encrypted and stored using AWS Secrets Manager.
+        <DialogDescription className="text-[#475569]">
+          Your API keys are safely encrypted and stored using AWS Secrets
+          Manager.
         </DialogDescription>
         <Form {...form}>
           <form
-            className="flex flex-col gap-y-4"
+            className="flex flex-col gap-4"
             onSubmit={form.handleSubmit(onSubmit)}
           >
             <FormField
               control={form.control}
               name="publicApiKey"
-              render={({field}) => (
+              render={({ field }) => (
                 <FormItem>
-                  <Label>Public API Key</Label>
+                  <Label className="text-sm font-semibold text-[#0F172A]">
+                    Public API Key
+                  </Label>
                   <FormControl>
-                    <Input 
+                    <Input
                       {...field}
                       placeholder="Your public API key"
                       type="password"
+                      className="h-10 border-[#E2E8F0] bg-white text-sm text-[#0F172A] placeholder:text-[#475569] focus-visible:border-[#0F2D52]"
                     />
                   </FormControl>
                   <FormMessage />
@@ -125,14 +134,17 @@ const VapiPluginForm = ({
             <FormField
               control={form.control}
               name="privateApiKey"
-              render={({field}) => (
+              render={({ field }) => (
                 <FormItem>
-                  <Label>Private API Key</Label>
+                  <Label className="text-sm font-semibold text-[#0F172A]">
+                    Private API Key
+                  </Label>
                   <FormControl>
-                    <Input 
+                    <Input
                       {...field}
                       placeholder="Your private API key"
                       type="password"
+                      className="h-10 border-[#E2E8F0] bg-white text-sm text-[#0F172A] placeholder:text-[#475569] focus-visible:border-[#0F2D52]"
                     />
                   </FormControl>
                   <FormMessage />
@@ -140,10 +152,7 @@ const VapiPluginForm = ({
               )}
             />
             <DialogFooter>
-              <Button
-                disabled={form.formState.isSubmitting}
-                type="submit"
-              >
+              <Button disabled={form.formState.isSubmitting} type="submit">
                 {form.formState.isSubmitting ? "Connecting..." : "Connect"}
               </Button>
             </DialogFooter>
@@ -151,19 +160,19 @@ const VapiPluginForm = ({
         </Form>
       </DialogContent>
     </Dialog>
-  )
+  );
 };
 
 const VapiPluginRemoveForm = ({
   open,
   setOpen,
-} : {
+}: {
   open: boolean;
-  setOpen: (value: boolean) => void
+  setOpen: (value: boolean) => void;
 }) => {
   const removePlugin = useMutation(api.private.plugins.remove);
   const onSubmit = async () => {
-    try{
+    try {
       await removePlugin({
         service: "vapi",
       });
@@ -177,11 +186,11 @@ const VapiPluginRemoveForm = ({
 
   return (
     <Dialog onOpenChange={setOpen} open={open}>
-      <DialogContent>
+      <DialogContent className="border-[#E2E8F0] bg-white">
         <DialogHeader>
-          <DialogTitle>Disconnect Vapi</DialogTitle>
+          <DialogTitle className="text-[#0F172A]">Disconnect Vapi</DialogTitle>
         </DialogHeader>
-        <DialogDescription>
+        <DialogDescription className="text-[#475569]">
           Are you sure you want to disconnect the Vapi plugin?
         </DialogDescription>
         <DialogFooter>
@@ -194,40 +203,40 @@ const VapiPluginRemoveForm = ({
   );
 };
 
-
 export const VapiView = () => {
-
-  const vapiPlugin = useQuery(api.private.plugins.getOne, {service: "vapi"});
+  const vapiPlugin = useQuery(api.private.plugins.getOne, { service: "vapi" });
 
   const [connectOpen, setConnectOpen] = useState(false);
   const [removeOpen, setRemoveOpen] = useState(false);
 
   const toggleConnection = () => {
-    if(vapiPlugin) {
+    if (vapiPlugin) {
       setRemoveOpen(true);
     } else {
       setConnectOpen(true);
-    };
-  }
+    }
+  };
 
   return (
     <>
-    <VapiPluginForm open={connectOpen} setOpen={setConnectOpen} />
-    <VapiPluginRemoveForm open={removeOpen} setOpen={setRemoveOpen} />
-    <div className="flex min-h-screen flex-col bg-muted p-8">
-        <div className="mx-auto w-full max-w-screen-md">
-          <div className="space-y-2">
-            <h1 className="text-2xl md: text-4x1">Vapi Plugin</h1>
-            <p className="text-muted-foreground">
+      <VapiPluginForm open={connectOpen} setOpen={setConnectOpen} />
+      <VapiPluginRemoveForm open={removeOpen} setOpen={setRemoveOpen} />
+      <div className="flex min-h-screen flex-col bg-[#F8FAFC] p-4 sm:p-6">
+        <div className="mx-auto flex w-full max-w-screen-md flex-col gap-8">
+          <div className="flex flex-col gap-2">
+            <h1 className="text-2xl leading-tight font-bold text-[#0F172A]">
+              Vapi Plugin
+            </h1>
+            <p className="text-sm text-[#475569]">
               Connect Vapi to enable AI voice calls and phone support
             </p>
           </div>
 
-          <div className="mt-8">
+          <div>
             {vapiPlugin ? (
               <VapiConnectedView onDisconnect={toggleConnection} />
             ) : (
-              <PluginCard 
+              <PluginCard
                 serviceImage="/vapi.png"
                 serviceName="Vapi"
                 features={vapiFeature}

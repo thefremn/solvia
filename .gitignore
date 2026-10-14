@@ -36,3 +36,9 @@ npm-debug.log*
 # Misc
 .DS_Store
 *.pem
+
+# Local plans and agent skills (local-only, never commit)
+plans/
+.opencode/
+.agents/
+.claude/

@@ -1,9 +1,9 @@
-import {withSentryConfig} from "@sentry/nextjs";
+import { withSentryConfig } from "@sentry/nextjs";
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   transpilePackages: ["@workspace/ui"],
   devIndicators: false,
-}
+};
 
 export default withSentryConfig(nextConfig, {
   // For all available options, see:
@@ -26,7 +26,10 @@ export default withSentryConfig(nextConfig, {
   // This can increase your server load as well as your hosting bill.
   // Note: Check that the configured route will not match with your Next.js middleware, otherwise reporting of client-
   // side errors will fail.
-  tunnelRoute: "/monitoring",
+  // Only enabled in production so local dev traffic reports direct and never
+  // hits the proxy path (or Clerk middleware).
+  tunnelRoute:
+    process.env.NODE_ENV === "production" ? "/monitoring" : undefined,
 
   // Automatically tree-shake Sentry logger statements to reduce bundle size
   disableLogger: true,
