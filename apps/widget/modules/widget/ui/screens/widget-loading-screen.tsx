@@ -3,7 +3,7 @@
 import {useAtomValue, useSetAtom} from "jotai";
 import {LoaderIcon} from "lucide-react";
 import {errorMessageAtom, loadingMessageAtom, organizationIdAtom, vapiSecretsAtom, widgetSettingsAtom} from "@/modules/widget/atoms/widget-atoms";
-import { WidgetHeader } from "../components/widget-header";
+import { WidgetGreetingHeader } from "../components/widget-greeting-header";
 import { useEffect, useState } from "react";
 import { useAction, useMutation, useQuery } from "convex/react";
 import {api} from "@workspace/backend/_generated/api";
@@ -161,16 +161,7 @@ export const WidgetLoadingScreen = ({organizationId}: {organizationId: string | 
 
     return (
         <>
-            <WidgetHeader>
-                <div className="flex flex-col justify-between gap-y-2  px-6 font-semibold">
-                <p className="text-3xl">
-                    Hi there!👋
-                </p>
-                <p className="text-lg">
-                    Let&apos;s get you started
-                </p>
-                </div>
-            </WidgetHeader>
+            <WidgetGreetingHeader />
             <div className="flex flex-1 flex-col items-center justify-center gap-y-4 p-4">
                 <LoaderIcon className="animate-spin" />
                 <p className="text-sm">

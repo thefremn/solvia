@@ -3,7 +3,7 @@
 import {useAtomValue, useSetAtom} from "jotai";
 import { ChevronRightIcon, MessageSquareTextIcon, MicIcon, PhoneIcon } from "lucide-react";
 import {conversationIdAtom, errorMessageAtom, hasVapiSecretsAtom, widgetSettingsAtom} from "@/modules/widget/atoms/widget-atoms";
-import { WidgetHeader } from "../components/widget-header";
+import { WidgetGreetingHeader } from "../components/widget-greeting-header";
 import { Button } from "@workspace/ui/components/button";
 import { contactSessionIdAtomFamily, organizationIdAtom, screenAtom } from "@/modules/widget/atoms/widget-atoms";
 import { useMutation } from "convex/react";
@@ -56,16 +56,7 @@ export const WidgetSelectionScreen = () => {
 
     return (
         <>
-            <WidgetHeader>
-                <div className="flex flex-col justify-between gap-y-2 px-2 px-6 font-semibold">
-                <p className="text-3xl">
-                    Hi there!👋
-                </p>
-                <p className="text-lg">
-                    Let&apos;s get you started
-                </p>
-                </div>
-            </WidgetHeader>
+            <WidgetGreetingHeader />
             <div className="flex flex-1 flex-col gap-y-4 p-4 overflow-y-auto">
                 <Button className="h-16 w-full justify-between" variant="outline" onClick={handleNewConversation} disabled={isPending}>
                     <div className="flex items-center gap-x-2">
