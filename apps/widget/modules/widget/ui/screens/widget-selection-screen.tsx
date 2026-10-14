@@ -78,8 +78,8 @@ export const WidgetSelectionScreen = () => {
                 </h1>
             </WidgetHeader>
             <div className="flex flex-1 flex-col gap-y-4 overflow-y-auto bg-muted/50 p-4">
-                <form className="-mt-6" onSubmit={handleAskSubmit}>
-                    <InputGroup className="h-11 rounded-full bg-card shadow-sm">
+                <form className="-mt-5" onSubmit={handleAskSubmit}>
+                    <InputGroup className="h-11 rounded-full bg-card shadow-md">
                         <InputGroupInput
                             aria-label="Ask a question"
                             onChange={(event) => setQuestion(event.target.value)}
