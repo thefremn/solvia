@@ -6,7 +6,8 @@ import { Id } from "@workspace/backend/_generated/dataModel";
 import { useMutation, useQuery, useAction } from "convex/react";
 
 import { Button } from "@workspace/ui/components/button";
-import { MoreHorizontalIcon, Wand2Icon } from "lucide-react";
+import { ChevronLeft, Wand2Icon } from "lucide-react";
+import Link from "next/link";
 
 import {
   AIConversation,
@@ -19,8 +20,6 @@ import {
   AIInputButton,
   AIInputSubmit,
   AIInputTextarea,
-  AIInputToolbar,
-  AIInputTools,
 } from "@workspace/ui/components/ai/input";
 
 import {
@@ -58,7 +57,7 @@ export const ConversationIdView = ({
   const messages = useThreadMessages(
     api.private.messages.getMany,
     conversation?.threadId ? { threadId: conversation.threadId } : "skip",
-    { initialNumItems: 10 }
+    { initialNumItems: 10 },
   );
 
   // -------------------------------
@@ -104,8 +103,8 @@ export const ConversationIdView = ({
       conversation.status === "resolved"
         ? "unresolved"
         : conversation.status === "escalated"
-        ? "resolved"
-        : "escalated";
+          ? "resolved"
+          : "escalated";
 
     updateStatus({
       conversationId,
@@ -113,55 +112,130 @@ export const ConversationIdView = ({
     });
   };
 
-  return (
-    <div className="flex h-full flex-col bg-muted overflow-hidden">
+  const uiMessages = toUIMessages(messages.results ?? []);
+  const contactName = conversation?.contactSession?.name;
+  const contactEmail = conversation?.contactSession?.email;
 
+  return (
+    <div className="flex h-full flex-col overflow-hidden bg-[#F8FAFC]">
       {/* HEADER */}
-      <header className="flex items-center justify-between border-b bg-background p-2.5 shrink-0">
-        <Button size="sm" variant="ghost">
-          <MoreHorizontalIcon />
+      <header className="flex h-14 shrink-0 items-center gap-2 border-b border-[#E2E8F0] bg-white px-3">
+        <Button variant="ghost" size="icon-sm" asChild>
+          <Link href="/conversations" aria-label="Back to conversations">
+            <ChevronLeft />
+          </Link>
         </Button>
 
         {conversation ? (
-          <ConversationStatusButton
-            status={conversation.status}
-            disabled={form.formState.isSubmitting}
-            onClick={handleStatusChange}
-          />
+          <div className="flex min-w-0 items-center gap-2.5">
+            <DicebearAvatar
+              seed={conversation.contactSessionId}
+              size={32}
+              className="shrink-0"
+            />
+            <div className="flex min-w-0 flex-col">
+              <span className="truncate text-sm leading-5 font-semibold text-[#0F172A]">
+                {contactName || "Unknown visitor"}
+              </span>
+              {contactEmail && (
+                <span className="truncate text-[11px] leading-4 text-[#475569]">
+                  {contactEmail}
+                </span>
+              )}
+            </div>
+          </div>
         ) : (
-          <div className="w-24 h-8 rounded-md bg-muted animate-pulse" />
+          <div className="flex items-center gap-2.5">
+            <div className="size-8 shrink-0 animate-pulse rounded-full bg-[#F1F5F9]" />
+            <div className="flex flex-col gap-1">
+              <div className="h-4 w-28 animate-pulse rounded bg-[#F1F5F9]" />
+              <div className="h-3 w-20 animate-pulse rounded bg-[#F1F5F9]" />
+            </div>
+          </div>
         )}
+
+        <div className="ml-auto shrink-0">
+          {conversation ? (
+            <ConversationStatusButton
+              status={conversation.status}
+              disabled={form.formState.isSubmitting}
+              onClick={handleStatusChange}
+            />
+          ) : (
+            <div className="h-8 w-24 animate-pulse rounded-md bg-[#F1F5F9]" />
+          )}
+        </div>
       </header>
 
       {/* MESSAGES */}
-      <AIConversation className="flex-1 min-h-0">
-        <AIConversationContent>
-          {toUIMessages(messages.results ?? []).map((message) => (
-            <AIMessage
-              key={message.id}
-              from={message.role === "user" ? "assistant" : "user"}
-            >
-              <AIMessageContent>
-                <AIResponse>{message.content}</AIResponse>
-              </AIMessageContent>
+      <AIConversation className="min-h-0 flex-1">
+        <AIConversationContent className="flex flex-col gap-1 p-4">
+          {uiMessages.length === 0 && (
+            <p className="py-10 text-center text-sm text-[#475569]">
+              No messages yet. New messages will appear here in real time.
+            </p>
+          )}
+          {uiMessages.map((message) => {
+            const isVisitor = message.role === "user";
+            return (
+              <AIMessage
+                key={message.id}
+                from={isVisitor ? "assistant" : "user"}
+              >
+                <AIMessageContent
+                  className={
+                    isVisitor
+                      ? "rounded-xl rounded-tl-sm border-[#E2E8F0] bg-white text-[#0F172A] shadow-xs"
+                      : "rounded-xl rounded-tr-sm border-transparent bg-none bg-[#127CDD] text-white shadow-xs"
+                  }
+                >
+                  <AIResponse>{message.content}</AIResponse>
+                </AIMessageContent>
 
-              {message.role === "user" ? (
-                <DicebearAvatar
-                  seed={conversation?.contactSessionId ?? ""}
-                  size={32}
-                />
-              ) : null}
-            </AIMessage>
-          ))}
+                {isVisitor ? (
+                  <DicebearAvatar
+                    seed={conversation?.contactSessionId ?? ""}
+                    size={32}
+                  />
+                ) : null}
+              </AIMessage>
+            );
+          })}
         </AIConversationContent>
 
         <AIConversationScrollButton />
       </AIConversation>
 
       {/* INPUT */}
-      <div className="p-2 shrink-0">
+      <div className="shrink-0 border-t border-[#E2E8F0] bg-[#F8FAFC] p-3">
         <Form {...form}>
-          <AIInput onSubmit={form.handleSubmit(onSubmit)}>
+          <AIInput
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="flex items-center gap-1 rounded-xl border-[#E2E8F0] bg-white p-1.5 pl-2 shadow-xs"
+          >
+            <AIInputButton
+              disabled={
+                !form.getValues("message") || form.formState.isSubmitting
+              }
+              onClick={async () => {
+                const original = form.getValues("message");
+                if (!original) return;
+
+                try {
+                  const enhanced = await enhanceMsg({ prompt: original });
+                  form.setValue("message", enhanced);
+                } catch (error) {
+                  toast.error("Something went wrong");
+                  console.error("Enhance error:", error);
+                }
+              }}
+              aria-label="Enhance response"
+              title="Enhance response"
+              className="shrink-0 text-[#475569] hover:bg-[#F1F5F9] hover:text-[#0F2D52]"
+            >
+              <Wand2Icon data-icon="inline-start" />
+              Enhance
+            </AIInputButton>
 
             {/* TEXTAREA */}
             <FormField
@@ -170,8 +244,9 @@ export const ConversationIdView = ({
               disabled={conversation?.status === "resolved"}
               render={({ field }) => (
                 <AIInputTextarea
-                  value={field.value}   // <-- FIXED (controlled!)
+                  value={field.value}
                   onChange={field.onChange}
+                  minHeight={40}
                   disabled={
                     conversation?.status === "resolved" ||
                     form.formState.isSubmitting
@@ -187,47 +262,23 @@ export const ConversationIdView = ({
                       ? "Conversation resolved"
                       : "Type your response as an operator..."
                   }
+                  className="min-w-0 flex-1 text-[#0F172A] placeholder:text-[#475569]"
                 />
               )}
             />
 
-            {/* TOOLBAR */}
-            <AIInputToolbar>
-
-              {/* TOOLS */}
-              <AIInputTools>
-                <AIInputButton
-                  disabled={!form.getValues("message") || form.formState.isSubmitting}
-                  onClick={async () => {
-                    const original = form.getValues("message");
-                    if (!original) return;
-
-                    try {
-                      const enhanced = await enhanceMsg({ prompt: original });
-                      form.setValue("message", enhanced); // <-- Fix: updates the controlled textarea
-                    } catch (error) {
-                      toast.error("Something went wrong");
-                      console.error("Enhance error:", error);
-                    }
-                  }}
-                >
-                  <Wand2Icon className="mr-1" />
-                  Enhance
-                </AIInputButton>
-              </AIInputTools>
-
-              {/* SUBMIT */}
-              <AIInputSubmit
-                disabled={
-                  conversation?.status === "resolved" ||
-                  !form.formState.isValid ||
-                  form.formState.isSubmitting
-                }
-                status="ready"
-                type="submit"
-              />
-
-            </AIInputToolbar>
+            {/* SUBMIT */}
+            <AIInputSubmit
+              disabled={
+                conversation?.status === "resolved" ||
+                !form.formState.isValid ||
+                form.formState.isSubmitting
+              }
+              status={form.formState.isSubmitting ? "submitted" : "ready"}
+              type="submit"
+              aria-label="Send message"
+              className="shrink-0 rounded-lg bg-[#0F2D52] text-white shadow-none hover:bg-[#0A2240] hover:text-white disabled:bg-[#F1F5F9] disabled:text-[#94A3B8] disabled:opacity-100"
+            />
           </AIInput>
         </Form>
       </div>

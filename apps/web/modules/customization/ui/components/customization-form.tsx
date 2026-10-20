@@ -20,6 +20,7 @@ import {
 } from "@workspace/ui/components/form";
 import { Input } from "@workspace/ui/components/input";
 import { Separator } from "@workspace/ui/components/separator";
+import { Spinner } from "@workspace/ui/components/spinner";
 import { Textarea } from "@workspace/ui/components/textarea";
 import { Doc } from "@workspace/backend/_generated/dataModel";
 import { api } from "@workspace/backend/_generated/api";
@@ -27,7 +28,6 @@ import { useMutation } from "convex/react";
 import { VapiFormFields } from "./vapi-form-fields";
 import { FormSchema } from "../../types";
 import { widgetSettingsSchema } from "../../schemas";
-
 
 type WidgetSettings = Doc<"widgetSettings">;
 
@@ -82,115 +82,144 @@ export const CustomizationForm = ({
   };
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-        <Card>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="flex flex-col gap-6"
+      >
+        <Card className="border-[#E2E8F0] bg-white shadow-xs">
           <CardHeader>
-            <CardTitle>General Chat Settings</CardTitle>
-            <CardDescription>
-              Configure basic chat widget behavoiur and messages
+            <CardTitle className="text-base font-semibold text-[#0F172A]">
+              General Chat Settings
+            </CardTitle>
+            <CardDescription className="text-sm text-[#475569]">
+              Configure basic chat widget behaviour and messages
             </CardDescription>
           </CardHeader>
-          <CardContent className="space-y-6">
+          <CardContent className="flex flex-col gap-6">
             <FormField
               control={form.control}
               name="greetMessage"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Greeting Message</FormLabel>
+                  <FormLabel className="text-sm font-semibold text-[#0F172A]">
+                    Greeting Message
+                  </FormLabel>
                   <FormControl>
                     <Textarea
                       {...field}
                       placeholder="Welcome message shown when the chat open"
                       rows={3}
+                      className="border-[#E2E8F0] bg-white text-sm text-[#0F172A] placeholder:text-[#475569] focus-visible:border-[#0F2D52]"
                     />
                   </FormControl>
-                  <FormDescription>
+                  <FormDescription className="text-xs text-[#475569]">
                     The first message customers see when they open the chat
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <Separator />
-            <div className="space-y-4">
-              <div>
-                <h3 className="text-sm mb-4">Default Suggestions</h3>
-                <p className="mb-4 text-sm text-muted-foreground">
+            <Separator className="bg-[#E2E8F0]" />
+            <div className="flex flex-col gap-4">
+              <div className="flex flex-col gap-1">
+                <h3 className="text-sm leading-snug font-semibold text-[#0F172A]">
+                  Default Suggestions
+                </h3>
+                <p className="text-sm text-[#475569]">
                   Quick reply suggestions shown to customers to help guide the
                   conversation
                 </p>
-                <div className="space-y-4">
-                  <FormField
-                    control={form.control}
-                    name="defaultSuggestions.suggestion1"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Suggestion 1</FormLabel>
-                        <FormControl>
-                          <Input
-                            {...field}
-                            placeholder="e.g., How do I get started?"
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="defaultSuggestions.suggestion2"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Suggestion 2</FormLabel>
-                        <FormControl>
-                          <Input
-                            {...field}
-                            placeholder="e.g., What are your pricing plans?"
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="defaultSuggestions.suggestion3"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Suggestion 3</FormLabel>
-                        <FormControl>
-                          <Input
-                            {...field}
-                            placeholder="e.g., I need help with my acccount"
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
+              </div>
+              <div className="flex flex-col gap-4">
+                <FormField
+                  control={form.control}
+                  name="defaultSuggestions.suggestion1"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-sm font-semibold text-[#0F172A]">
+                        Suggestion 1
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          placeholder="e.g., How do I get started?"
+                          className="h-10 border-[#E2E8F0] bg-white text-sm text-[#0F172A] placeholder:text-[#475569] focus-visible:border-[#0F2D52]"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="defaultSuggestions.suggestion2"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-sm font-semibold text-[#0F172A]">
+                        Suggestion 2
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          placeholder="e.g., What are your pricing plans?"
+                          className="h-10 border-[#E2E8F0] bg-white text-sm text-[#0F172A] placeholder:text-[#475569] focus-visible:border-[#0F2D52]"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="defaultSuggestions.suggestion3"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-sm font-semibold text-[#0F172A]">
+                        Suggestion 3
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          placeholder="e.g., I need help with my account"
+                          className="h-10 border-[#E2E8F0] bg-white text-sm text-[#0F172A] placeholder:text-[#475569] focus-visible:border-[#0F2D52]"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
               </div>
             </div>
           </CardContent>
         </Card>
         {hasVapiPlugin && (
-          <Card>
+          <Card className="border-[#E2E8F0] bg-white shadow-xs">
             <CardHeader>
-              <CardTitle>Voice Assitant Settings</CardTitle>
-              <CardDescription>
+              <CardTitle className="text-base font-semibold text-[#0F172A]">
+                Voice Assistant Settings
+              </CardTitle>
+              <CardDescription className="text-sm text-[#475569]">
                 Configure voice calling features powered by Vapi
               </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-6">
-              <VapiFormFields form={form}/>
+            <CardContent className="flex flex-col gap-6">
+              <VapiFormFields form={form} />
             </CardContent>
           </Card>
         )}
         <div className="flex justify-end">
-            <Button disabled={form.formState.isSubmitting} type="submit">Save Settings</Button>
+          <Button
+            disabled={form.formState.isSubmitting}
+            type="submit"
+            className="h-10 bg-[#127CDD] px-4 text-sm font-semibold text-white hover:bg-[#0F2D52] disabled:bg-[#F1F5F9] disabled:text-[#94A3B8] disabled:opacity-100"
+          >
+            {form.formState.isSubmitting && (
+              <Spinner data-icon="inline-start" />
+            )}
+            Save Settings
+          </Button>
         </div>
       </form>
     </Form>
   );
 };
-

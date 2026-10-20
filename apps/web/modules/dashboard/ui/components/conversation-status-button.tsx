@@ -1,6 +1,16 @@
 import { Doc } from "@workspace/backend/_generated/dataModel";
 import { Button } from "@workspace/ui/components/button";
 import { ArrowRightIcon, CheckIcon, ArrowUpIcon } from "lucide-react";
+import { cn } from "@workspace/ui/lib/utils";
+
+const STATUS_STYLES = {
+  resolved:
+    "border-[#E2E8F0] bg-white text-green-700 hover:bg-green-100 hover:text-green-700",
+  escalated:
+    "border-[#E2E8F0] bg-white text-amber-700 hover:bg-amber-100 hover:text-amber-700",
+  unresolved:
+    "border-[#E2E8F0] bg-white text-red-600 hover:bg-red-100 hover:text-red-600",
+} as const;
 
 export const ConversationStatusButton = ({
   status,
@@ -18,24 +28,26 @@ export const ConversationStatusButton = ({
         disabled={disabled}
         onClick={onClick}
         size="sm"
-        variant="tertiary"
+        variant="outline"
+        className={cn(STATUS_STYLES.resolved)}
       >
-        <CheckIcon className="mr-1 h-4 w-4" />
+        <CheckIcon data-icon="inline-start" />
         Resolved
       </Button>
     );
   }
 
-  // ✅ ESCALATED — yellow / UP ARROW
+  // ✅ ESCALATED — amber / UP ARROW
   if (status === "escalated") {
     return (
       <Button
         disabled={disabled}
         onClick={onClick}
         size="sm"
-        className="bg-yellow-500/20 text-yellow-700 border border-yellow-500 hover:bg-yellow-500/30"
+        variant="outline"
+        className={cn(STATUS_STYLES.escalated)}
       >
-        <ArrowUpIcon className="mr-1 h-4 w-4" />
+        <ArrowUpIcon data-icon="inline-start" />
         Escalated
       </Button>
     );
@@ -47,9 +59,10 @@ export const ConversationStatusButton = ({
       disabled={disabled}
       onClick={onClick}
       size="sm"
-      variant="destructive"
+      variant="outline"
+      className={cn(STATUS_STYLES.unresolved)}
     >
-      <ArrowRightIcon className="mr-1 h-4 w-4" />
+      <ArrowRightIcon data-icon="inline-start" />
       Unresolved
     </Button>
   );

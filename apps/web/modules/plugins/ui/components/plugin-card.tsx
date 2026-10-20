@@ -24,7 +24,7 @@ export const PluginCard = ({
   onSubmit,
 }: PluginCardProps) => {
   return (
-    <div className="h-fit w-full rounded-lg border bg-background p-8">
+    <div className="h-fit w-full rounded-xl border border-[#E2E8F0] bg-white p-8 shadow-xs">
       <div className="mb-6 flex items-center justify-center gap-6">
         <div className="flex flex-col items-center">
           <Image
@@ -35,8 +35,8 @@ export const PluginCard = ({
             src={serviceImage}
           />
         </div>
-        <div className="flex flex-col items-center gap-1">
-          <ArrowLeftRightIcon />
+        <div className="flex flex-col items-center">
+          <ArrowLeftRightIcon className="size-5 text-[#94A3B8]" />
         </div>
         <div className="flex flex-col items-center">
           <Image
@@ -49,26 +49,32 @@ export const PluginCard = ({
         </div>
       </div>
       <div className="mb-6 text-center">
-        <p className="text-lg">Connect your {serviceName} account</p>
+        <p className="text-base font-semibold text-[#0F172A]">
+          Connect your {serviceName} account
+        </p>
       </div>
 
       <div className="mb-6">
-        <div className="space-y-4">
+        <div className="flex flex-col gap-4">
           {features.map((feature) => (
             <div className="flex items-center gap-3" key={feature.label}>
-              <div className="flex size-8 items-center justify-center rounded-lg border bg-muted">
-                <feature.icon className="size-4 text-muted-foreground" />
+              <div className="flex size-8 shrink-0 items-center justify-center rounded-lg border border-[#E2E8F0] bg-[#F1F5F9]">
+                <feature.icon className="size-4 text-[#475569]" />
               </div>
-              <div>
-                <div className="font-medium text-sm">{feature.label}</div>
-                <div className="text-muted-foreground text-xs">{feature.description}</div>
+              <div className="min-w-0">
+                <div className="text-sm font-semibold text-[#0F172A]">
+                  {feature.label}
+                </div>
+                <div className="text-xs text-[#475569]">
+                  {feature.description}
+                </div>
               </div>
             </div>
           ))}
         </div>
       </div>
-      <div className="text-centre">
-        <Button 
+      <div className="text-center">
+        <Button
           className="size-full"
           disabled={isDisabled}
           onClick={onSubmit}
@@ -77,7 +83,6 @@ export const PluginCard = ({
           Connect
           <PlugIcon />
         </Button>
-
       </div>
     </div>
   );

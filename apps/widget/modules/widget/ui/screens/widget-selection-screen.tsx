@@ -1,11 +1,11 @@
 "use client";
 
 import {useAtomValue, useSetAtom} from "jotai";
-import { ChevronRightIcon, MessageSquareTextIcon, MicIcon, PhoneIcon } from "lucide-react";
+import { ChevronRightIcon, MicIcon, PhoneIcon, SendHorizontalIcon } from "lucide-react";
 import {conversationIdAtom, errorMessageAtom, hasVapiSecretsAtom, widgetSettingsAtom} from "@/modules/widget/atoms/widget-atoms";
-import { WidgetHeader } from "../components/widget-header";
 import { Button } from "@workspace/ui/components/button";
 import { contactSessionIdAtomFamily, organizationIdAtom, screenAtom } from "@/modules/widget/atoms/widget-atoms";
+import { WidgetHeader } from "../components/widget-header";
 import { useMutation } from "convex/react";
 import { api } from "@workspace/backend/_generated/api";
 import { useState } from "react";
@@ -56,26 +56,27 @@ export const WidgetSelectionScreen = () => {
 
     return (
         <>
-            <WidgetHeader>
-                <div className="flex flex-col justify-between gap-y-2 px-2 px-6 font-semibold">
-                <p className="text-3xl">
-                    Hi there!👋
-                </p>
-                <p className="text-lg">
-                    Let&apos;s get you started
-                </p>
-                </div>
+            <WidgetHeader className="px-5 pb-16 pt-6">
+                <h1 className="text-2xl font-bold leading-tight">
+                    Hi there!
+                    <span className="block">How can we help?</span>
+                </h1>
             </WidgetHeader>
-            <div className="flex flex-1 flex-col gap-y-4 p-4 overflow-y-auto">
-                <Button className="h-16 w-full justify-between" variant="outline" onClick={handleNewConversation} disabled={isPending}>
-                    <div className="flex items-center gap-x-2">
-                        <MessageSquareTextIcon className="size-4" />
-                            <span>Start chat</span>
-                    </div>
-                    <ChevronRightIcon />
+            <div className="flex flex-1 flex-col gap-y-4 overflow-y-auto bg-muted/50 p-4">
+                <Button
+                    className="-mt-3 h-14 w-full justify-between rounded-full border-primary/40 bg-card shadow-md shadow-primary/10"
+                    disabled={isPending}
+                    onClick={handleNewConversation}
+                    variant="outline"
+                >
+                    <span className="text-base font-medium">Ask a question</span>
+                    <SendHorizontalIcon className="size-5 text-primary" />
                 </Button>
+                {hasVapiSecrets && (widgetSettings?.vapiSettings?.assistantId || widgetSettings?.vapiSettings?.phoneNumber) && (
+                <div className="flex flex-col gap-y-2">
+                    <p className="text-sm font-semibold text-muted-foreground">More ways to reach us</p>
                 {hasVapiSecrets && widgetSettings?.vapiSettings?.assistantId && (
-                <Button className="h-16 w-full justify-between" variant="outline" onClick={() => setScreen("voice")} disabled={isPending}>
+                <Button className="h-11 w-full justify-between" variant="outline" onClick={() => handleNewConversation()} disabled={isPending}>
                     <div className="flex items-center gap-x-2">
                         <MicIcon className="size-4" />
                             <span>Start voice call</span>
@@ -84,13 +85,15 @@ export const WidgetSelectionScreen = () => {
                 </Button>
                 )}
                 {hasVapiSecrets && widgetSettings?.vapiSettings?.phoneNumber && (
-                <Button className="h-16 w-full justify-between" variant="outline" onClick={() => setScreen("contact")} disabled={isPending}>
+                <Button className="h-11 w-full justify-between" variant="outline" onClick={() => setScreen("contact")} disabled={isPending}>
                     <div className="flex items-center gap-x-2">
                         <PhoneIcon className="size-4" />
                             <span>Call us</span>
                     </div>
                     <ChevronRightIcon />
                 </Button>
+                )}
+                </div>
                 )}
             </div>
             <WidgetFooter />
