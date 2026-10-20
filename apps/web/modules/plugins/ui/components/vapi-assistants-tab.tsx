@@ -15,17 +15,17 @@ export const VapiAssistantsTab = () => {
   const { data: assistants, isLoading } = useVapiAssistants();
 
   return (
-    <div className="bg-white">
+    <div className="bg-card">
       <Table>
         <TableHeader>
-          <TableRow className="border-[#E2E8F0] bg-[#F1F5F9] hover:bg-[#F1F5F9]">
-            <TableHead className="px-3 py-3 text-xs font-semibold tracking-wide text-[#475569] uppercase">
+          <TableRow className="border-border bg-muted hover:bg-muted">
+            <TableHead className="px-3 py-3 text-xs font-semibold tracking-wide text-muted-foreground uppercase">
               Assistant
             </TableHead>
-            <TableHead className="px-3 py-3 text-xs font-semibold tracking-wide text-[#475569] uppercase">
+            <TableHead className="px-3 py-3 text-xs font-semibold tracking-wide text-muted-foreground uppercase">
               Model
             </TableHead>
-            <TableHead className="px-3 py-3 text-xs font-semibold tracking-wide text-[#475569] uppercase">
+            <TableHead className="px-3 py-3 text-xs font-semibold tracking-wide text-muted-foreground uppercase">
               First Message
             </TableHead>
           </TableRow>
@@ -34,10 +34,10 @@ export const VapiAssistantsTab = () => {
           {(() => {
             if (isLoading) {
               return (
-                <TableRow className="border-[#E2E8F0] hover:bg-transparent">
+                <TableRow className="border-border hover:bg-transparent">
                   <TableCell
                     colSpan={3}
-                    className="h-24 px-3 py-8 text-center text-sm text-[#475569]"
+                    className="h-24 px-3 py-8 text-center text-sm text-muted-foreground"
                   >
                     Loading assistants...
                   </TableCell>
@@ -46,10 +46,10 @@ export const VapiAssistantsTab = () => {
             }
             if (assistants.length === 0) {
               return (
-                <TableRow className="border-[#E2E8F0] hover:bg-transparent">
+                <TableRow className="border-border hover:bg-transparent">
                   <TableCell
                     colSpan={3}
-                    className="h-24 px-3 py-8 text-center text-sm text-[#475569]"
+                    className="h-24 px-3 py-8 text-center text-sm text-muted-foreground"
                   >
                     No assistants configured
                   </TableCell>
@@ -59,24 +59,24 @@ export const VapiAssistantsTab = () => {
 
             return assistants.map((assistant) => (
               <TableRow
-                className="border-[#E2E8F0] hover:bg-[#F1F5F9]"
+                className="border-border hover:bg-muted"
                 key={assistant.id}
               >
                 <TableCell className="px-3 py-3">
                   <div className="flex items-center gap-3">
-                    <BotIcon className="size-4 shrink-0 text-[#475569]" />
-                    <span className="text-sm font-semibold text-[#0F172A]">
+                    <BotIcon className="size-4 shrink-0 text-muted-foreground" />
+                    <span className="text-sm font-semibold text-foreground">
                       {assistant.name || "Unnamed assistant"}
                     </span>
                   </div>
                 </TableCell>
                 <TableCell className="px-3 py-3">
-                  <span className="text-sm text-[#475569]">
+                  <span className="text-sm text-muted-foreground">
                     {assistant.model?.model || "Not configured"}
                   </span>
                 </TableCell>
                 <TableCell className="max-w-xs px-3 py-3">
-                  <p className="truncate text-sm text-[#475569]">
+                  <p className="truncate text-sm text-muted-foreground">
                     {assistant.firstMessage || "No greeting configured"}
                   </p>
                 </TableCell>

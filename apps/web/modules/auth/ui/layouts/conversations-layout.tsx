@@ -26,19 +26,19 @@ export const ConversationsLayout = ({
           maxSize={30}
           className="md:min-w-[350px]"
         >
-          <div className="h-full bg-white">
+          <div className="h-full bg-card">
             <ConversationsPanel onCollapseList={() => setListCollapsed(true)} />
           </div>
         </ResizablePanel>
       )}
       {listCollapsed && (
-        <div className="flex w-10 shrink-0 flex-col items-center border-r border-[#E2E8F0] bg-white py-2">
+        <div className="flex w-10 shrink-0 flex-col items-center border-r border-border bg-card py-2">
           <Button
             variant="ghost"
             size="icon-sm"
             onClick={() => setListCollapsed(false)}
             aria-label="Expand conversation list"
-            className="text-[#475569] hover:bg-[#F1F5F9] hover:text-[#0F2D52]"
+            className="text-muted-foreground hover:bg-muted hover:text-foreground"
           >
             <ChevronsRight />
           </Button>

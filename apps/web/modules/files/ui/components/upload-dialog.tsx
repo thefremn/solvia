@@ -85,10 +85,10 @@ export const UploadDialog = ({
 
   return (
     <Dialog onOpenChange={onOpenChange} open={open}>
-      <DialogContent className="border-[#E2E8F0] bg-white sm:max-w-lg">
+      <DialogContent className="border-border bg-card sm:max-w-lg">
         <DialogHeader>
-          <DialogTitle className="text-[#0F172A]">Upload Document</DialogTitle>
-          <DialogDescription className="text-[#475569]">
+          <DialogTitle className="text-foreground">Upload Document</DialogTitle>
+          <DialogDescription className="text-muted-foreground">
             Upload documents to your Knowledgebase for AI-powered search and
             retrieval
           </DialogDescription>
@@ -97,12 +97,12 @@ export const UploadDialog = ({
           <Field>
             <FieldLabel
               htmlFor="category"
-              className="text-sm font-semibold text-[#0F172A]"
+              className="text-sm font-semibold text-foreground"
             >
               Category
             </FieldLabel>
             <Input
-              className="h-10 w-full border-[#E2E8F0] text-sm text-[#0F172A] placeholder:text-[#475569] focus-visible:border-[#0F2D52]"
+              className="h-10 w-full border-border text-sm text-foreground placeholder:text-muted-foreground focus-visible:border-ring"
               id="category"
               onChange={(e) =>
                 setUploadForm((prev) => ({
@@ -118,15 +118,15 @@ export const UploadDialog = ({
           <Field>
             <FieldLabel
               htmlFor="filename"
-              className="text-sm font-semibold text-[#0F172A]"
+              className="text-sm font-semibold text-foreground"
             >
               Filename{" "}
-              <span className="text-xs font-normal text-[#475569]">
+              <span className="text-xs font-normal text-muted-foreground">
                 (optional)
               </span>
             </FieldLabel>
             <Input
-              className="h-10 w-full border-[#E2E8F0] text-sm text-[#0F172A] placeholder:text-[#475569] focus-visible:border-[#0F2D52]"
+              className="h-10 w-full border-border text-sm text-foreground placeholder:text-muted-foreground focus-visible:border-ring"
               id="filename"
               onChange={(e) =>
                 setUploadForm((prev) => ({
@@ -159,7 +159,7 @@ export const UploadDialog = ({
             disabled={isUploading}
             onClick={handleCancel}
             variant="outline"
-            className="border-[#E2E8F0] bg-white text-[#0F2D52] hover:bg-[#F1F5F9] hover:text-[#0A2240]"
+            className="border-border bg-card text-foreground hover:bg-muted hover:text-primary"
           >
             Cancel
           </Button>
@@ -169,7 +169,7 @@ export const UploadDialog = ({
               isUploading || uploadedFiles.length === 0 || !uploadForm.category
             }
             onClick={handleUpload}
-            className="bg-[#0F2D52] text-sm font-semibold text-white hover:bg-[#0A2240] disabled:bg-[#F1F5F9] disabled:text-[#94A3B8] disabled:opacity-100"
+            className="bg-primary text-sm font-semibold text-white hover:bg-primary/90 disabled:bg-muted disabled:text-muted-foreground disabled:opacity-100"
           >
             {isUploading ? "Uploading..." : "Upload"}
           </Button>

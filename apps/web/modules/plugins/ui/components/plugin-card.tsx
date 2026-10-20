@@ -24,7 +24,7 @@ export const PluginCard = ({
   onSubmit,
 }: PluginCardProps) => {
   return (
-    <div className="h-fit w-full rounded-xl border border-[#E2E8F0] bg-white p-8 shadow-xs">
+    <div className="h-fit w-full rounded-xl border border-border bg-card p-8 shadow-xs">
       <div className="mb-6 flex items-center justify-center gap-6">
         <div className="flex flex-col items-center">
           <Image
@@ -36,7 +36,7 @@ export const PluginCard = ({
           />
         </div>
         <div className="flex flex-col items-center">
-          <ArrowLeftRightIcon className="size-5 text-[#94A3B8]" />
+          <ArrowLeftRightIcon className="size-5 text-muted-foreground" />
         </div>
         <div className="flex flex-col items-center">
           <Image
@@ -49,7 +49,7 @@ export const PluginCard = ({
         </div>
       </div>
       <div className="mb-6 text-center">
-        <p className="text-base font-semibold text-[#0F172A]">
+        <p className="text-base font-semibold text-foreground">
           Connect your {serviceName} account
         </p>
       </div>
@@ -58,14 +58,14 @@ export const PluginCard = ({
         <div className="flex flex-col gap-4">
           {features.map((feature) => (
             <div className="flex items-center gap-3" key={feature.label}>
-              <div className="flex size-8 shrink-0 items-center justify-center rounded-lg border border-[#E2E8F0] bg-[#F1F5F9]">
-                <feature.icon className="size-4 text-[#475569]" />
+              <div className="flex size-8 shrink-0 items-center justify-center rounded-lg border border-border bg-muted">
+                <feature.icon className="size-4 text-muted-foreground" />
               </div>
               <div className="min-w-0">
-                <div className="text-sm font-semibold text-[#0F172A]">
+                <div className="text-sm font-semibold text-foreground">
                   {feature.label}
                 </div>
-                <div className="text-xs text-[#475569]">
+                <div className="text-xs text-muted-foreground">
                   {feature.description}
                 </div>
               </div>

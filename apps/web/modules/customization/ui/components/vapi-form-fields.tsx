@@ -36,7 +36,7 @@ export const VapiFormFields = ({ form }: VapiFormFieldsProps) => {
         name="vapiSettings.assistantId"
         render={({ field }) => (
           <FormItem>
-            <FormLabel className="text-sm font-semibold text-[#0F172A]">
+            <FormLabel className="text-sm font-semibold text-foreground">
               Voice Assistant
             </FormLabel>
             <Select
@@ -45,7 +45,7 @@ export const VapiFormFields = ({ form }: VapiFormFieldsProps) => {
               value={field.value}
             >
               <FormControl>
-                <SelectTrigger className="h-10 border-[#E2E8F0] bg-white text-sm text-[#0F172A] data-placeholder:text-[#475569] focus:border-[#0F2D52]">
+                <SelectTrigger className="h-10 border-border bg-card text-sm text-foreground data-placeholder:text-muted-foreground focus:border-ring">
                   <SelectValue
                     placeholder={
                       assiantansLoading
@@ -55,10 +55,10 @@ export const VapiFormFields = ({ form }: VapiFormFieldsProps) => {
                   />
                 </SelectTrigger>
               </FormControl>
-              <SelectContent className="border-[#E2E8F0] bg-white">
+              <SelectContent className="border-border bg-card">
                 <SelectItem
                   value="none"
-                  className="text-sm text-[#0F172A] focus:bg-[#EBF5FF] focus:text-[#0F2D52]"
+                  className="text-sm text-foreground focus:bg-accent focus:text-foreground"
                 >
                   None
                 </SelectItem>
@@ -66,7 +66,7 @@ export const VapiFormFields = ({ form }: VapiFormFieldsProps) => {
                   <SelectItem
                     key={assistant.id}
                     value={assistant.id}
-                    className="text-sm text-[#0F172A] focus:bg-[#EBF5FF] focus:text-[#0F2D52]"
+                    className="text-sm text-foreground focus:bg-accent focus:text-foreground"
                   >
                     {assistant.name || "Unnamed Assistant"} -{" "}
                     {assistant.model?.model || "Unknown Model"}
@@ -74,7 +74,7 @@ export const VapiFormFields = ({ form }: VapiFormFieldsProps) => {
                 ))}
               </SelectContent>
             </Select>
-            <FormDescription className="text-xs text-[#475569]">
+            <FormDescription className="text-xs text-muted-foreground">
               The Vapi assistant to use for voice calling
             </FormDescription>
             <FormMessage />
@@ -86,7 +86,7 @@ export const VapiFormFields = ({ form }: VapiFormFieldsProps) => {
         name="vapiSettings.phoneNumber"
         render={({ field }) => (
           <FormItem>
-            <FormLabel className="text-sm font-semibold text-[#0F172A]">
+            <FormLabel className="text-sm font-semibold text-foreground">
               Display Phone Number
             </FormLabel>
             <Select
@@ -95,7 +95,7 @@ export const VapiFormFields = ({ form }: VapiFormFieldsProps) => {
               value={field.value}
             >
               <FormControl>
-                <SelectTrigger className="h-10 border-[#E2E8F0] bg-white text-sm text-[#0F172A] data-placeholder:text-[#475569] focus:border-[#0F2D52]">
+                <SelectTrigger className="h-10 border-border bg-card text-sm text-foreground data-placeholder:text-muted-foreground focus:border-ring">
                   <SelectValue
                     placeholder={
                       assiantansLoading
@@ -105,10 +105,10 @@ export const VapiFormFields = ({ form }: VapiFormFieldsProps) => {
                   />
                 </SelectTrigger>
               </FormControl>
-              <SelectContent className="border-[#E2E8F0] bg-white">
+              <SelectContent className="border-border bg-card">
                 <SelectItem
                   value="none"
-                  className="text-sm text-[#0F172A] focus:bg-[#EBF5FF] focus:text-[#0F2D52]"
+                  className="text-sm text-foreground focus:bg-accent focus:text-foreground"
                 >
                   None
                 </SelectItem>
@@ -116,14 +116,14 @@ export const VapiFormFields = ({ form }: VapiFormFieldsProps) => {
                   <SelectItem
                     key={phone.id}
                     value={phone.number || phone.id}
-                    className="text-sm text-[#0F172A] focus:bg-[#EBF5FF] focus:text-[#0F2D52]"
+                    className="text-sm text-foreground focus:bg-accent focus:text-foreground"
                   >
                     {phone.number || "Unknown"} - {phone.name || "Unnamed"}
                   </SelectItem>
                 ))}
               </SelectContent>
             </Select>
-            <FormDescription className="text-xs text-[#475569]">
+            <FormDescription className="text-xs text-muted-foreground">
               Phone number to display in the widget
             </FormDescription>
             <FormMessage />

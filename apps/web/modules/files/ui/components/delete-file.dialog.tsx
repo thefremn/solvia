@@ -47,21 +47,21 @@ export const DeleteFileDialog = ({
   };
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="border-[#E2E8F0] bg-white sm:max-w-md">
+      <DialogContent className="border-border bg-card sm:max-w-md">
         <DialogHeader>
-          <DialogTitle className="text-[#0F172A]">Delete File</DialogTitle>
-          <DialogDescription className="text-[#475569]">
+          <DialogTitle className="text-foreground">Delete File</DialogTitle>
+          <DialogDescription className="text-muted-foreground">
             Are you sure you want to delete this file?This action cannot be
             undone.
           </DialogDescription>
         </DialogHeader>
         {file && (
           <div className="py-4">
-            <div className="rounded-lg border border-[#E2E8F0] bg-[#F1F5F9] p-4">
-              <p className="text-sm font-semibold text-[#0F172A]">
+            <div className="rounded-lg border border-border bg-muted p-4">
+              <p className="text-sm font-semibold text-foreground">
                 {file.name}
               </p>
-              <p className="text-sm text-[#475569]">
+              <p className="text-sm text-muted-foreground">
                 Type:{file.type.toUpperCase()} | Size: {file.size}
               </p>
             </div>
@@ -71,7 +71,7 @@ export const DeleteFileDialog = ({
           <Button
             disabled={isDeleting}
             variant="outline"
-            className="border-[#E2E8F0] bg-white text-[#0F2D52] hover:bg-[#F1F5F9] hover:text-[#0A2240]"
+            className="border-border bg-card text-foreground hover:bg-muted hover:text-primary"
             onClick={() => onOpenChange(false)}
           >
             Cancel

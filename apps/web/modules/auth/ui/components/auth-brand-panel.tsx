@@ -41,7 +41,7 @@ export const AuthBrandPanel = () => {
 
         <div className="flex max-w-md flex-col gap-3">
           <p className="inline-flex w-fit items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-[11px] font-semibold tracking-[0.08em] text-[#EBF5FF] uppercase">
-            <span className="size-1.5 rounded-full bg-[#127CDD]" />
+            <span className="size-1.5 rounded-full bg-brand-accent" />
             AI-powered customer support
           </p>
           <h1 className="text-[32px] leading-[1.1] font-bold tracking-tight text-white xl:text-4xl">
@@ -76,7 +76,7 @@ export const AuthBrandPanel = () => {
           {/* top floating preview — structure from inspiration, Solvia copy only */}
           <div className="absolute top-0 right-6 w-72 animate-[auth-float_6s_ease-in-out_infinite] rounded-xl border border-white/10 bg-white/[0.07] p-3 shadow-xl backdrop-blur-md motion-reduce:animate-none">
             <div className="flex items-center gap-2 border-b border-white/10 pb-2">
-              <span className="flex size-6 items-center justify-center rounded-md bg-[#127CDD]">
+              <span className="flex size-6 items-center justify-center rounded-md bg-brand-accent">
                 <MessagesSquare className="size-3.5 text-white" />
               </span>
               <p className="text-xs font-semibold text-white">Live chat</p>
@@ -86,7 +86,7 @@ export const AuthBrandPanel = () => {
               <p className="w-fit max-w-full rounded-lg rounded-tl-sm bg-white/10 px-2.5 py-1.5 text-xs text-white/85">
                 Do you offer weekend support?
               </p>
-              <p className="ml-auto w-fit max-w-full rounded-lg rounded-tr-sm bg-[#127CDD] px-2.5 py-1.5 text-xs font-medium text-white">
+              <p className="ml-auto w-fit max-w-full rounded-lg rounded-tr-sm bg-brand-accent-fill px-2.5 py-1.5 text-xs font-medium text-white">
                 Yes — from your help center. Want a human to follow up?
               </p>
             </div>

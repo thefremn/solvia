@@ -98,11 +98,11 @@ const VapiPluginForm = ({
 
   return (
     <Dialog onOpenChange={setOpen} open={open}>
-      <DialogContent className="border-[#E2E8F0] bg-white">
+      <DialogContent className="border-border bg-card">
         <DialogHeader>
-          <DialogTitle className="text-[#0F172A]">Enable Vapi</DialogTitle>
+          <DialogTitle className="text-foreground">Enable Vapi</DialogTitle>
         </DialogHeader>
-        <DialogDescription className="text-[#475569]">
+        <DialogDescription className="text-muted-foreground">
           Your API keys are safely encrypted and stored using AWS Secrets
           Manager.
         </DialogDescription>
@@ -116,7 +116,7 @@ const VapiPluginForm = ({
               name="publicApiKey"
               render={({ field }) => (
                 <FormItem>
-                  <Label className="text-sm font-semibold text-[#0F172A]">
+                  <Label className="text-sm font-semibold text-foreground">
                     Public API Key
                   </Label>
                   <FormControl>
@@ -124,7 +124,7 @@ const VapiPluginForm = ({
                       {...field}
                       placeholder="Your public API key"
                       type="password"
-                      className="h-10 border-[#E2E8F0] bg-white text-sm text-[#0F172A] placeholder:text-[#475569] focus-visible:border-[#0F2D52]"
+                      className="h-10 border-border bg-card text-sm text-foreground placeholder:text-muted-foreground focus-visible:border-ring"
                     />
                   </FormControl>
                   <FormMessage />
@@ -136,7 +136,7 @@ const VapiPluginForm = ({
               name="privateApiKey"
               render={({ field }) => (
                 <FormItem>
-                  <Label className="text-sm font-semibold text-[#0F172A]">
+                  <Label className="text-sm font-semibold text-foreground">
                     Private API Key
                   </Label>
                   <FormControl>
@@ -144,7 +144,7 @@ const VapiPluginForm = ({
                       {...field}
                       placeholder="Your private API key"
                       type="password"
-                      className="h-10 border-[#E2E8F0] bg-white text-sm text-[#0F172A] placeholder:text-[#475569] focus-visible:border-[#0F2D52]"
+                      className="h-10 border-border bg-card text-sm text-foreground placeholder:text-muted-foreground focus-visible:border-ring"
                     />
                   </FormControl>
                   <FormMessage />
@@ -186,11 +186,11 @@ const VapiPluginRemoveForm = ({
 
   return (
     <Dialog onOpenChange={setOpen} open={open}>
-      <DialogContent className="border-[#E2E8F0] bg-white">
+      <DialogContent className="border-border bg-card">
         <DialogHeader>
-          <DialogTitle className="text-[#0F172A]">Disconnect Vapi</DialogTitle>
+          <DialogTitle className="text-foreground">Disconnect Vapi</DialogTitle>
         </DialogHeader>
-        <DialogDescription className="text-[#475569]">
+        <DialogDescription className="text-muted-foreground">
           Are you sure you want to disconnect the Vapi plugin?
         </DialogDescription>
         <DialogFooter>
@@ -221,13 +221,13 @@ export const VapiView = () => {
     <>
       <VapiPluginForm open={connectOpen} setOpen={setConnectOpen} />
       <VapiPluginRemoveForm open={removeOpen} setOpen={setRemoveOpen} />
-      <div className="flex min-h-screen flex-col bg-[#F8FAFC] p-4 sm:p-6">
+      <div className="flex min-h-screen flex-col bg-background p-4 sm:p-6">
         <div className="mx-auto flex w-full max-w-screen-md flex-col gap-8">
           <div className="flex flex-col gap-2">
-            <h1 className="text-2xl leading-tight font-bold text-[#0F172A]">
+            <h1 className="text-2xl leading-tight font-bold text-foreground">
               Vapi Plugin
             </h1>
-            <p className="text-sm text-[#475569]">
+            <p className="text-sm text-muted-foreground">
               Connect Vapi to enable AI voice calls and phone support
             </p>
           </div>

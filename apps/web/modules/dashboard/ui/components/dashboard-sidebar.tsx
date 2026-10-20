@@ -31,6 +31,8 @@ import {
 import { cn } from "@workspace/ui/lib/utils";
 import { usePathname } from "next/navigation";
 
+import { ThemeToggle } from "@/components/theme-toggle";
+
 type NavBadge = {
   label: string;
   tone: "neutral" | "pending";
@@ -38,8 +40,8 @@ type NavBadge = {
 
 const BADGE_STYLES: Record<NavBadge["tone"], string> = {
   // DESIGN.md 1.2 status colour map
-  neutral: "bg-slate-100 text-slate-600",
-  pending: "bg-amber-100 text-amber-700",
+  neutral: "bg-slate-100 text-slate-600 dark:bg-slate-500/15 dark:text-slate-400",
+  pending: "bg-amber-100 text-amber-700 dark:bg-amber-500/15 dark:text-amber-400",
 };
 
 type NavItem = {
@@ -111,7 +113,7 @@ const SidebarCollapseToggle = ({
         direction === "collapse" ? "Collapse Sidebar" : "Expand Sidebar"
       }
       className={cn(
-        "text-[#475569] hover:bg-[#F1F5F9] hover:text-[#0F2D52]",
+        "text-muted-foreground hover:bg-muted hover:text-foreground",
         className,
       )}
     >
@@ -139,7 +141,7 @@ export const DashboardSidebar = () => {
             aria-label="Solvia home"
           >
             <Image src="/logo.svg" alt="Solvia logo" width={24} height={24} />
-            <span className="text-base font-bold tracking-tight text-[#0F172A] group-data-[collapsible=icon]:hidden">
+            <span className="text-base font-bold tracking-tight text-foreground group-data-[collapsible=icon]:hidden">
               Solvia
             </span>
           </Link>
@@ -151,7 +153,7 @@ export const DashboardSidebar = () => {
         <div className="hidden justify-center group-data-[collapsible=icon]:flex">
           <SidebarCollapseToggle direction="expand" />
         </div>
-        <div className="rounded-md border border-[#E2E8F0] bg-white group-data-[collapsible=icon]:border-transparent group-data-[collapsible=icon]:bg-transparent">
+        <div className="rounded-md border border-border bg-card group-data-[collapsible=icon]:border-transparent group-data-[collapsible=icon]:bg-transparent">
           <SidebarMenu>
             <SidebarMenuItem>
               <SidebarMenuButton asChild size="lg">
@@ -163,13 +165,13 @@ export const DashboardSidebar = () => {
                       rootBox: "w-full! h-10!",
                       avatarBox: "size-6! rounded-md",
                       organizationSwitcherTrigger:
-                        "w-full! justify-start! rounded-md! px-2! hover:bg-[#F1F5F9]! group-data-[collapsible=icon]:size-8! group-data-[collapsible=icon]:p-2!",
+                        "w-full! justify-start! rounded-md! px-2! hover:bg-muted! group-data-[collapsible=icon]:size-8! group-data-[collapsible=icon]:p-2!",
                       organizationPreview:
                         "group-data-[collapsible=icon]:justify-center! gap-2!",
                       organizationPreviewTextContainer:
-                        "group-data-[collapsible=icon]:hidden! text-sm! font-semibold! text-[#0F172A]!",
+                        "group-data-[collapsible=icon]:hidden! text-sm! font-semibold! text-foreground!",
                       organizationSwitcherTriggerIcon:
-                        "group-data-[collapsible=icon]:hidden! ml-auto! text-[#475569]!",
+                        "group-data-[collapsible=icon]:hidden! ml-auto! text-muted-foreground!",
                     },
                   }}
                 />
@@ -181,7 +183,7 @@ export const DashboardSidebar = () => {
       <SidebarContent>
         {navGroups.map((group) => (
           <SidebarGroup key={group.label}>
-            <SidebarGroupLabel className="text-[11px] font-semibold tracking-wide text-[#475569] uppercase">
+            <SidebarGroupLabel className="text-[11px] font-semibold tracking-wide text-muted-foreground uppercase">
               {group.label}
             </SidebarGroupLabel>
             <SidebarGroupContent>
@@ -195,9 +197,9 @@ export const DashboardSidebar = () => {
                         isActive={active}
                         tooltip={item.title}
                         className={cn(
-                          "h-10 rounded-md text-sm text-[#475569] transition-colors duration-150 ease-out hover:bg-[#F1F5F9] hover:text-[#0F172A]",
+                          "h-10 rounded-md text-sm text-muted-foreground transition-colors duration-150 ease-out hover:bg-muted hover:text-foreground",
                           active &&
-                            "bg-[#EBF5FF] font-semibold text-[#0F2D52] hover:bg-[#EBF5FF] hover:text-[#0F2D52]",
+                            "bg-accent font-semibold text-accent-foreground hover:bg-accent hover:text-accent-foreground",
                         )}
                       >
                         <Link href={item.url} className="relative">
@@ -205,13 +207,13 @@ export const DashboardSidebar = () => {
                             aria-hidden
                             className={cn(
                               "absolute top-1/2 -left-2 hidden h-5 w-[3px] -translate-y-1/2 rounded-full group-data-[collapsible=icon]:block",
-                              active ? "bg-[#127CDD]" : "bg-transparent",
+                              active ? "bg-brand-accent" : "bg-transparent",
                             )}
                           />
                           <item.icon
                             className={cn(
                               "size-[18px] shrink-0",
-                              active ? "text-[#127CDD]" : "text-[#475569]",
+                              active ? "text-brand-accent" : "text-muted-foreground",
                             )}
                           />
                           <span className="truncate">{item.title}</span>
@@ -235,8 +237,13 @@ export const DashboardSidebar = () => {
           </SidebarGroup>
         ))}
       </SidebarContent>
-      <SidebarFooter className="border-t border-[#E2E8F0]">
+      <SidebarFooter className="border-t border-border">
         <SidebarMenu>
+          <SidebarMenuItem>
+            <div className="flex w-full items-center px-2 group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-0">
+              <ThemeToggle />
+            </div>
+          </SidebarMenuItem>
           <SidebarMenuItem>
             <UserButton
               showName
@@ -244,9 +251,9 @@ export const DashboardSidebar = () => {
                 elements: {
                   rootBox: "w-full! h-10!",
                   userButtonTrigger:
-                    "w-full! rounded-md! p-2! hover:bg-[#F1F5F9]! group-data-[collapsible=icon]:size-8! group-data-[collapsible=icon]:p-2!",
+                    "w-full! rounded-md! p-2! hover:bg-muted! group-data-[collapsible=icon]:size-8! group-data-[collapsible=icon]:p-2!",
                   userButtonBox:
-                    "w-full! flex-row-reverse! justify-end! gap-2! text-[#0F172A]! group-data-[collapsible=icon]:justify-center!",
+                    "w-full! flex-row-reverse! justify-end! gap-2! text-foreground! group-data-[collapsible=icon]:justify-center!",
                   userButtonOuterIdentifier:
                     "pl-0! text-sm! font-semibold! group-data-[collapsible=icon]:hidden!",
                   avatarBox: "size-6! rounded-full",

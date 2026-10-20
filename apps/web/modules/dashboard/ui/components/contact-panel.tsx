@@ -166,7 +166,7 @@ export const ContactPanel = () => {
   }
 
   return (
-    <div className="flex h-full w-full flex-col bg-white">
+    <div className="flex h-full w-full flex-col bg-card">
       <div className="flex flex-col gap-4 p-4">
         <div className="flex items-center gap-2">
           <DicebearAvatar
@@ -180,7 +180,7 @@ export const ContactPanel = () => {
           />
           <div className="min-w-0 flex-1 overflow-hidden">
             <div className="flex items-center gap-2">
-              <h4 className="line-clamp-1 text-sm font-semibold text-[#0F172A]">
+              <h4 className="line-clamp-1 text-sm font-semibold text-foreground">
                 {contactSession.name}
               </h4>
             </div>
@@ -188,7 +188,7 @@ export const ContactPanel = () => {
               href={`mailto:${contactSession.email}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="line-clamp-1 block truncate text-sm text-[#475569] hover:text-[#0F2D52]"
+              className="line-clamp-1 block truncate text-sm text-muted-foreground hover:text-foreground"
             >
               {contactSession.email}
             </a>
@@ -208,34 +208,34 @@ export const ContactPanel = () => {
       <div>
         {contactSession.metadata && (
           <Accordion
-            className="w-full rounded-none border-y border-[#E2E8F0]"
+            className="w-full rounded-none border-y border-border"
             collapsible
             type="single"
           >
             {accordionSections.map((section) => (
               <AccordionItem
-                className="rounded-none border-[#E2E8F0] outline-none has-focus-visible:z-10 has-focus-visible:border-[#0F2D52]"
+                className="rounded-none border-border outline-none has-focus-visible:z-10 has-focus-visible:border-ring"
                 key={section.id}
                 value={section.id}
               >
-                <AccordionTrigger className="flex w-full flex-1 items-start justify-between gap-4 rounded-none bg-[#F1F5F9] px-5 py-4 text-left text-sm font-semibold text-[#0F172A] outline-none transition-all hover:no-underline disabled:pointer-events-none disabled:opacity-50">
+                <AccordionTrigger className="flex w-full flex-1 items-start justify-between gap-4 rounded-none bg-muted px-5 py-4 text-left text-sm font-semibold text-foreground outline-none transition-all hover:no-underline disabled:pointer-events-none disabled:opacity-50">
                   <div className="flex items-center gap-4">
-                    <section.icon className="size-4 shrink-0 text-[#475569]" />
+                    <section.icon className="size-4 shrink-0 text-muted-foreground" />
                     <span>{section.title}</span>
                   </div>
                 </AccordionTrigger>
-                <AccordionContent className="bg-white px-5 py-4">
+                <AccordionContent className="bg-card px-5 py-4">
                   <div className="flex flex-col gap-2 text-sm">
                     {section.items.map((item) => (
                       <div
                         className="flex justify-between gap-4"
                         key={`${section.id}-${item.label}`}
                       >
-                        <span className="shrink-0 text-[#475569]">
+                        <span className="shrink-0 text-muted-foreground">
                           {item.label}
                         </span>
                         <span
-                          className={`min-w-0 text-right text-[#0F172A] ${item.className ?? ""}`}
+                          className={`min-w-0 text-right text-foreground ${item.className ?? ""}`}
                         >
                           {item.value}
                         </span>

@@ -34,27 +34,27 @@ export const PricingTable = () => {
   };
 
   return (
-    <Card className="w-full border-[#E2E8F0] bg-white shadow-xs">
+    <Card className="w-full border-border bg-card shadow-xs">
       <CardHeader className="text-center">
-        <CardTitle className="text-2xl leading-tight font-bold text-[#0F172A]">
+        <CardTitle className="text-2xl leading-tight font-bold text-foreground">
           Upgrade to Pro
         </CardTitle>
-        <CardDescription className="text-sm text-[#475569]">
+        <CardDescription className="text-sm text-muted-foreground">
           Contact us to upgrade your organization to Pro plan
         </CardDescription>
       </CardHeader>
       <CardContent className="flex flex-col gap-4">
         <div className="flex flex-col gap-2">
-          <p className="text-sm text-[#475569]">
+          <p className="text-sm text-muted-foreground">
             Pro plan includes all premium features:
           </p>
           <ul className="flex flex-col gap-1.5">
             {PRO_FEATURES.map((feature) => (
               <li
                 key={feature}
-                className="flex items-center gap-2 text-sm text-[#0F172A]"
+                className="flex items-center gap-2 text-sm text-foreground"
               >
-                <CheckIcon className="size-4 shrink-0 text-green-700" />
+                <CheckIcon className="size-4 shrink-0 text-green-700 dark:text-green-400" />
                 {feature}
               </li>
             ))}

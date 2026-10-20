@@ -2,37 +2,29 @@ import { SignIn } from "@clerk/nextjs";
 
 const clerkAppearance = {
   variables: {
-    colorPrimary: "#0F2D52",
-    colorBackground: "#FFFFFF",
-    colorInput: "#FFFFFF",
-    colorInputForeground: "#0F172A",
-    colorForeground: "#0F172A",
-    colorMutedForeground: "#475569",
-    colorBorder: "#E2E8F0",
-    colorRing: "#0F2D52",
     borderRadius: "0.5rem",
   },
   elements: {
     rootBox: "w-full",
     cardBox: "w-full shadow-none",
-    card: "w-full border border-[#E2E8F0] bg-white shadow-xl gap-4 p-6",
+    card: "w-full border border-border bg-card shadow-xl gap-4 p-6",
     header: "gap-1",
-    headerTitle: "text-lg font-bold text-[#0F172A]",
-    headerSubtitle: "text-sm text-[#475569]",
+    headerTitle: "text-lg font-bold text-foreground",
+    headerSubtitle: "text-sm text-muted-foreground",
     socialButtonsBlockButton:
-      "h-10 border-[#E2E8F0] text-sm font-semibold text-[#0F172A]",
-    dividerLine: "bg-[#E2E8F0]",
-    dividerText: "text-xs text-[#475569]",
+      "h-10 border-border text-sm font-semibold text-foreground",
+    dividerLine: "bg-muted",
+    dividerText: "text-xs text-muted-foreground",
     form: "gap-3",
     formField: "gap-1",
     formButtonPrimary:
-      "h-10 bg-[#0F2D52] text-sm font-semibold text-white hover:bg-[#0A2240]",
+      "h-10 bg-primary text-sm font-semibold text-white hover:bg-primary/90",
     formFieldInput:
-      "h-10 border-[#E2E8F0] text-sm text-[#0F172A] placeholder:text-[#475569] focus:border-[#0F2D52]",
-    formFieldLabel: "text-sm font-semibold text-[#0F172A]",
+      "h-10 border-border text-sm text-foreground placeholder:text-muted-foreground focus:border-ring",
+    formFieldLabel: "text-sm font-semibold text-foreground",
     footer: "gap-2",
-    footerActionText: "text-sm text-[#475569]",
-    footerActionLink: "font-semibold text-[#0F2D52] hover:text-[#0A2240]",
+    footerActionText: "text-sm text-muted-foreground",
+    footerActionLink: "font-semibold text-foreground hover:text-primary",
   },
 } as const;
 

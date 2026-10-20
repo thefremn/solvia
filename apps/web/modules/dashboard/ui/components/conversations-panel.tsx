@@ -50,7 +50,7 @@ export const ConversationsPanel = ({
     <>
       <AuthLoading>
         <div className="flex h-full items-center justify-center">
-          <Loader2Icon className="animate-spin text-[#94A3B8]" />
+          <Loader2Icon className="animate-spin text-muted-foreground" />
         </div>
       </AuthLoading>
       <Authenticated>
@@ -91,8 +91,8 @@ const ConversationsPanelContent = ({
     loadSize: 10,
   });
   return (
-    <div className="flex h-full w-full flex-col bg-white">
-      <div className="flex items-center gap-2 border-b border-[#E2E8F0] p-2">
+    <div className="flex h-full w-full flex-col bg-card">
+      <div className="flex items-center gap-2 border-b border-border p-2">
         <ToggleGroup
           type="single"
           value={statusFilter}
@@ -104,14 +104,14 @@ const ConversationsPanelContent = ({
             }
           }}
           aria-label="Filter conversations by status"
-          className="min-w-0 flex-1 justify-start gap-1 overflow-hidden rounded-lg bg-[#F1F5F9] p-1"
+          className="min-w-0 flex-1 justify-start gap-1 overflow-hidden rounded-lg bg-muted p-1"
         >
           {STATUS_FILTERS.map((filter) => (
             <ToggleGroupItem
               key={filter.value}
               value={filter.value}
               aria-label={`Show ${filter.label} conversations`}
-              className="h-8 shrink-0 rounded-full px-2 text-xs font-medium whitespace-nowrap text-[#475569] transition-colors duration-150 ease-out hover:bg-white hover:text-[#0F172A] data-[state=on]:bg-white! data-[state=on]:font-semibold! data-[state=on]:text-[#0F2D52]! data-[state=on]:shadow-xs!"
+              className="h-8 shrink-0 rounded-full px-2 text-xs font-medium whitespace-nowrap text-muted-foreground transition-colors duration-150 ease-out hover:bg-card hover:text-foreground data-[state=on]:bg-card! data-[state=on]:font-semibold! data-[state=on]:text-foreground! data-[state=on]:shadow-xs!"
             >
               {filter.label}
             </ToggleGroupItem>
@@ -122,7 +122,7 @@ const ConversationsPanelContent = ({
           size="icon-sm"
           onClick={onCollapseList}
           aria-label="Collapse conversation list"
-          className="shrink-0 text-[#475569] hover:bg-[#F1F5F9] hover:text-[#0F2D52]"
+          className="shrink-0 text-muted-foreground hover:bg-muted hover:text-foreground"
         >
           <ChevronsLeft />
         </Button>
@@ -136,10 +136,10 @@ const ConversationsPanelContent = ({
               <EmptyMedia variant="icon">
                 <InboxIcon />
               </EmptyMedia>
-              <EmptyTitle className="text-[#0F172A]">
+              <EmptyTitle className="text-foreground">
                 No conversations found
               </EmptyTitle>
-              <EmptyDescription className="text-[#475569]">
+              <EmptyDescription className="text-muted-foreground">
                 New conversations will appear here in real time.
               </EmptyDescription>
             </EmptyHeader>
@@ -167,15 +167,15 @@ const ConversationsPanelContent = ({
                 <Link
                   key={conversation._id}
                   className={cn(
-                    "relative flex cursor-pointer items-start gap-3 border-b border-[#E2E8F0] px-3 py-3 text-sm leading-tight transition-colors duration-150 ease-out hover:bg-[#F1F5F9]",
-                    isSelected && "bg-[#EBF5FF] hover:bg-[#EBF5FF]",
+                    "relative flex cursor-pointer items-start gap-3 border-b border-border px-3 py-3 text-sm leading-tight transition-colors duration-150 ease-out hover:bg-muted",
+                    isSelected && "bg-accent hover:bg-accent",
                   )}
                   href={`/conversations/${conversation._id}`}
                 >
                   <div
                     aria-hidden
                     className={cn(
-                      "absolute top-0 left-0 h-full w-[3px] bg-[#127CDD] opacity-0 transition-opacity",
+                      "absolute top-0 left-0 h-full w-[3px] bg-brand-accent opacity-0 transition-opacity",
                       isSelected && "opacity-100",
                     )}
                   />
@@ -189,26 +189,26 @@ const ConversationsPanelContent = ({
                     <div className="flex w-full items-center gap-2">
                       <span
                         className={cn(
-                          "truncate text-sm font-semibold text-[#0F172A]",
-                          isSelected && "text-[#0F2D52]",
+                          "truncate text-sm font-semibold text-foreground",
+                          isSelected && "text-foreground",
                         )}
                       >
                         {conversation.contactSession.name}
                       </span>
-                      <span className="ml-auto shrink-0 text-[11px] text-[#475569]">
+                      <span className="ml-auto shrink-0 text-[11px] text-muted-foreground">
                         {formatDistanceToNow(conversation._creationTime)}
                       </span>
                     </div>
                     <div className="mt-1 flex items-center justify-between gap-2">
                       <div className="flex w-0 grow items-center gap-1">
                         {isLastMessageFromOperator && (
-                          <CornerUpLeftIcon className="size-3 shrink-0 text-[#475569]" />
+                          <CornerUpLeftIcon className="size-3 shrink-0 text-muted-foreground" />
                         )}
                         <span
                           className={cn(
-                            "line-clamp-1 text-xs text-[#475569]",
+                            "line-clamp-1 text-xs text-muted-foreground",
                             !isLastMessageFromOperator &&
-                              "font-semibold text-[#0F172A]",
+                              "font-semibold text-foreground",
                           )}
                         >
                           {conversation.lastMessage?.text}
@@ -228,7 +228,7 @@ const ConversationsPanelContent = ({
               canLoadMore={canLoadMore}
               isLoadingMore={isLoadingMore}
               onLoadMore={handleLoadMore}
-              className="text-[#475569] [&_button]:text-xs"
+              className="text-muted-foreground [&_button]:text-xs"
             />
           </div>
         </ScrollArea>

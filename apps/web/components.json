@@ -16,5 +16,8 @@
     "lib": "@/lib",
     "utils": "@workspace/ui/lib/utils",
     "ui": "@workspace/ui/components"
+  },
+  "registries": {
+    "@magicui": "https://magicui.design/r/{name}"
   }
 }

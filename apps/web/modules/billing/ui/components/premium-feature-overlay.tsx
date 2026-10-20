@@ -80,17 +80,17 @@ export const PremiumFeatureOverlay = ({
 
       {/*Upgrade prompt */}
       <div className="absolute inset-0 z-40 flex items-center justify-center p-4">
-        <Card className="w-full max-w-md border-[#E2E8F0] bg-white shadow-xl">
+        <Card className="w-full max-w-md border-border bg-card shadow-xl">
           <CardHeader className="text-center">
             <div className="flex items-center justify-center">
-              <div className="mb-2 inline-flex size-12 items-center justify-center rounded-full border border-[#E2E8F0] bg-[#F1F5F9]">
-                <GemIcon className="size-6 text-[#0F2D52]" />
+              <div className="mb-2 inline-flex size-12 items-center justify-center rounded-full border border-border bg-muted">
+                <GemIcon className="size-6 text-foreground" />
               </div>
             </div>
-            <CardTitle className="text-xl leading-snug font-bold text-[#0F172A]">
+            <CardTitle className="text-xl leading-snug font-bold text-foreground">
               Premium Feature
             </CardTitle>
-            <CardDescription className="text-sm text-[#475569]">
+            <CardDescription className="text-sm text-muted-foreground">
               This feature requires a Pro subscription
             </CardDescription>
           </CardHeader>
@@ -99,14 +99,14 @@ export const PremiumFeatureOverlay = ({
             <div className="flex flex-col gap-4">
               {features.map((feature) => (
                 <div key={feature.label} className="flex items-center gap-3">
-                  <div className="flex size-8 shrink-0 items-center justify-center rounded-lg border border-[#E2E8F0] bg-[#F1F5F9]">
-                    <feature.icon className="size-4 text-[#475569]" />
+                  <div className="flex size-8 shrink-0 items-center justify-center rounded-lg border border-border bg-muted">
+                    <feature.icon className="size-4 text-muted-foreground" />
                   </div>
                   <div className="min-w-0 text-left">
-                    <p className="text-sm font-semibold text-[#0F172A]">
+                    <p className="text-sm font-semibold text-foreground">
                       {feature.label}
                     </p>
-                    <p className="text-xs text-[#475569]">
+                    <p className="text-xs text-muted-foreground">
                       {feature.description}
                     </p>
                   </div>
