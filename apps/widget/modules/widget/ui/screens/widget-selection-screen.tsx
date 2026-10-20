@@ -64,13 +64,13 @@ export const WidgetSelectionScreen = () => {
             </WidgetHeader>
             <div className="flex flex-1 flex-col gap-y-4 overflow-y-auto bg-muted/50 p-4">
                 <Button
-                    className="-mt-3 h-11 w-full justify-between rounded-full border-primary/40 bg-card shadow-md shadow-primary/10"
+                    className="-mt-3 h-14 w-full justify-between rounded-full border-primary/40 bg-card shadow-md shadow-primary/10"
                     disabled={isPending}
                     onClick={handleNewConversation}
                     variant="outline"
                 >
-                    <span>Ask a question</span>
-                    <SendHorizontalIcon className="text-primary" />
+                    <span className="text-base font-medium">Ask a question</span>
+                    <SendHorizontalIcon className="size-5 text-primary" />
                 </Button>
                 {hasVapiSecrets && (widgetSettings?.vapiSettings?.assistantId || widgetSettings?.vapiSettings?.phoneNumber) && (
                 <div className="flex flex-col gap-y-2">
