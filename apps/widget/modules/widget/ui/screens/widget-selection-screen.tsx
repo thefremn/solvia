@@ -71,16 +71,17 @@ export const WidgetSelectionScreen = () => {
 
     return (
         <>
-            <WidgetHeader className="px-5 pb-16 pt-6">
-                <h1 className="text-2xl font-bold leading-tight">
+            <WidgetHeader className="px-5 py-6">
+                <h1 className="text-3xl font-bold leading-tight">
                     Hi there!
                     <span className="block">How can we help?</span>
                 </h1>
             </WidgetHeader>
             <div className="flex flex-1 flex-col gap-y-4 overflow-y-auto bg-muted/50 p-4">
                 <form className="-mt-3" onSubmit={handleAskSubmit}>
-                    <InputGroup className="h-11 rounded-full bg-card shadow-md">
+                    <InputGroup className="h-14 rounded-full border-primary/40 bg-card shadow-lg shadow-primary/10">
                         <InputGroupInput
+                            className="text-base"
                             aria-label="Ask a question"
                             onChange={(event) => setQuestion(event.target.value)}
                             placeholder="Ask a question"
