@@ -20,5 +20,13 @@ export default {
       domain: "https://allowing-bulldog-0.clerk.accounts.dev",
       applicationID: "convex",
     },
+    {
+      // Clerk's Development instance used for local development (the keys in
+      // apps/web/.env.local point at it). Since Preview and Production share
+      // this backend, local sign-ins fail with "No auth provider found" if it
+      // isn't trusted here too. If the local instance ever changes, update.
+      domain: "https://alert-redfish-6857.clerk.accounts.dev",
+      applicationID: "convex",
+    },
   ]
 };
