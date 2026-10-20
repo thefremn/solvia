@@ -2,14 +2,13 @@
 
 import {useAtomValue, useSetAtom} from "jotai";
 import { ChevronRightIcon, MicIcon, PhoneIcon, SendHorizontalIcon } from "lucide-react";
-import {conversationIdAtom, errorMessageAtom, hasVapiSecretsAtom, pendingMessageAtom, widgetSettingsAtom} from "@/modules/widget/atoms/widget-atoms";
+import {conversationIdAtom, errorMessageAtom, hasVapiSecretsAtom, widgetSettingsAtom} from "@/modules/widget/atoms/widget-atoms";
 import { Button } from "@workspace/ui/components/button";
-import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from "@workspace/ui/components/input-group";
 import { contactSessionIdAtomFamily, organizationIdAtom, screenAtom } from "@/modules/widget/atoms/widget-atoms";
 import { WidgetHeader } from "../components/widget-header";
 import { useMutation } from "convex/react";
 import { api } from "@workspace/backend/_generated/api";
-import { useState, type FormEvent } from "react";
+import { useState } from "react";
 import { WidgetFooter } from "../components/widget-footer";
 
 export const WidgetSelectionScreen = () => {
@@ -17,7 +16,6 @@ export const WidgetSelectionScreen = () => {
     const setScreen = useSetAtom(screenAtom);
     const setErrorMessage = useSetAtom(errorMessageAtom);
     const setConversationId = useSetAtom(conversationIdAtom);
-    const setPendingMessage = useSetAtom(pendingMessageAtom);
 
     const widgetSettings = useAtomValue(widgetSettingsAtom);
     const hasVapiSecrets = useAtomValue(hasVapiSecretsAtom);
@@ -28,9 +26,8 @@ export const WidgetSelectionScreen = () => {
 
     const createConversation = useMutation(api.public.conversations.create);
     const [isPending, setIsPending] = useState(false);
-    const [question, setQuestion] = useState("");
 
-    const handleNewConversation = async (initialMessage?: string) => {
+    const handleNewConversation = async () => {
 
         if(!organizationId){
             setScreen("error");
@@ -49,10 +46,6 @@ export const WidgetSelectionScreen = () => {
                 contactSessionId,
             });
             setConversationId(conversationId);
-            if(initialMessage?.trim()){
-                setPendingMessage(initialMessage.trim());
-                setQuestion("");
-            }
             setScreen("chat");
         } catch {
             setScreen("auth");
@@ -61,44 +54,24 @@ export const WidgetSelectionScreen = () => {
         }
     };
 
-    const handleAskSubmit = (event: FormEvent) => {
-        event.preventDefault();
-        if(!question.trim() || isPending){
-            return;
-        }
-        void handleNewConversation(question);
-    };
-
     return (
         <>
-            <WidgetHeader className="px-5 py-6">
-                <h1 className="text-3xl font-bold leading-tight">
+            <WidgetHeader className="px-5 pb-16 pt-6">
+                <h1 className="text-2xl font-bold leading-tight">
                     Hi there!
                     <span className="block">How can we help?</span>
                 </h1>
             </WidgetHeader>
             <div className="flex flex-1 flex-col gap-y-4 overflow-y-auto bg-muted/50 p-4">
-                <form className="-mt-3" onSubmit={handleAskSubmit}>
-                    <InputGroup className="h-14 rounded-full border-primary/40 bg-card shadow-lg shadow-primary/10">
-                        <InputGroupInput
-                            className="text-base"
-                            aria-label="Ask a question"
-                            onChange={(event) => setQuestion(event.target.value)}
-                            placeholder="Ask a question"
-                            value={question}
-                        />
-                        <InputGroupAddon align="inline-end">
-                            <InputGroupButton
-                                aria-label="Send question"
-                                disabled={!question.trim() || isPending}
-                                size="icon-sm"
-                                type="submit"
-                            >
-                                <SendHorizontalIcon className="text-primary" />
-                            </InputGroupButton>
-                        </InputGroupAddon>
-                    </InputGroup>
-                </form>
+                <Button
+                    className="-mt-3 h-11 w-full justify-between rounded-full border-primary/40 bg-card shadow-md shadow-primary/10"
+                    disabled={isPending}
+                    onClick={handleNewConversation}
+                    variant="outline"
+                >
+                    <span>Ask a question</span>
+                    <SendHorizontalIcon className="text-primary" />
+                </Button>
                 {hasVapiSecrets && (widgetSettings?.vapiSettings?.assistantId || widgetSettings?.vapiSettings?.phoneNumber) && (
                 <div className="flex flex-col gap-y-2">
                     <p className="text-sm font-semibold text-muted-foreground">More ways to reach us</p>

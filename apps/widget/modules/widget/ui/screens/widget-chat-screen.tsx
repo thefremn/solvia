@@ -3,9 +3,9 @@ import { WidgetHeader } from "../components/widget-header";
 import { Button } from "@workspace/ui/components/button";
 import { ArrowLeftIcon, MenuIcon } from "lucide-react";
 import { useQuery, useAction } from "convex/react";
-import { useAtom, useAtomValue, useSetAtom } from "jotai";
+import { useAtomValue, useSetAtom } from "jotai";
 import { api } from "@workspace/backend/_generated/api";
-import { contactSessionIdAtomFamily, conversationIdAtom, organizationIdAtom, pendingMessageAtom, screenAtom, widgetSettingsAtom } from "../../atoms/widget-atoms";
+import { contactSessionIdAtomFamily, conversationIdAtom, organizationIdAtom, screenAtom, widgetSettingsAtom } from "../../atoms/widget-atoms";
 import { AIConversation, AIConversationContent } from "@workspace/ui/components/ai/conversation";
 import {AIMessage, AIMessageContent} from "@workspace/ui/components/ai/message";
 import { AIResponse } from "@workspace/ui/components/ai/response";
@@ -19,7 +19,7 @@ import {AIInput, AIInputTextarea, AIInputToolbar, AIInputSubmit, AIInputTools} f
 import {useInfiniteScroll} from "@workspace/ui/hooks/use-infinite-scroll";
 import {InfiniteScrollTrigger} from "@workspace/ui/components/infinite-scroll-trigger";
 import {DicebearAvatar} from "@workspace/ui/components/dicebear-avatar";
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 
 const formSchema = z.object({
     message: z.string().min(1, "Message is required"),
@@ -79,21 +79,6 @@ export const WidgetChatScreen = () => {
    });
 
    const createMessage = useAction(api.public.messages.create);
-   const [pendingMessage, setPendingMessage] = useAtom(pendingMessageAtom);
-
-   useEffect(() => {
-       if(!pendingMessage || !conversation || !contactSessionId){
-           return;
-       }
-       const prompt = pendingMessage;
-       setPendingMessage(null);
-       void createMessage({
-           threadId: conversation.threadId,
-           prompt,
-           contactSessionId,
-       });
-   }, [pendingMessage, conversation, contactSessionId, createMessage, setPendingMessage]);
-
    const onSubmit = async (values: z.infer<typeof formSchema>) => {
         if(!conversation || !contactSessionId){
             return;
