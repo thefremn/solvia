@@ -67,7 +67,23 @@ Status badges follow a consistent visual pattern: `rounded-full px-2.5 py-0.5 te
 - **Info/Alternate:** `bg-teal-100 text-teal-700` — for alternative states or channels
 - **Archived/Muted:** `bg-zinc-100 text-zinc-600` — for archived, muted, or deprecated states
 
+**Dark mode variants (mandatory suffix on every status colour pair):**
+
+The light pair above must be extended with the matching `dark:` pair so badges stay legible on dark surfaces:
+
+| Status          | Light pair                     | Dark pair                          |
+|-----------------|--------------------------------|------------------------------------|
+| Success/Active  | `bg-green-100 text-green-700`  | `dark:bg-green-500/15 dark:text-green-400` |
+| Pending/Warning | `bg-amber-100 text-amber-700`  | `dark:bg-amber-500/15 dark:text-amber-400` |
+| Error/Failure   | `bg-red-100 text-red-600`      | `dark:bg-red-500/15 dark:text-red-400` |
+| Neutral/Inactive| `bg-slate-100 text-slate-600`  | `dark:bg-slate-500/15 dark:text-slate-400` |
+| Accent          | `bg-blue-100 text-blue-700`    | `dark:bg-blue-500/15 dark:text-blue-400` |
+| Info/Alternate  | `bg-teal-100 text-teal-700`    | `dark:bg-teal-500/15 dark:text-teal-400` |
+| Archived/Muted  | `bg-zinc-100 text-zinc-600`    | `dark:bg-zinc-500/15 dark:text-zinc-400` |
+
 Define domain-specific badge components with their own STATUS_CONFIG maps, but always follow the colour contract above.
+
+**Exception — conversation chat status button.** The chat status toggle (`ConversationStatusButton`) is intentionally pinned to its light pair (`border-[#E2E8F0] bg-white`) in both themes, with no `dark:` variants, at product owner's request — it must look identical to light mode when the app is dark.
 
 ### 1.3 Typography Scale
 
@@ -99,6 +115,19 @@ Rules: never go below 11px in dense contexts (table rows, badge text). Use prima
 | Cards on page | Extra-small |
 | Dialogs       | Extra-large |
 | Dropdowns     | Large       |
+
+### 1.6 Dark Mode
+
+Dark mode is class-based (`html.dark`, managed by `next-themes`) and driven by the semantic tokens in `packages/ui/src/styles/globals.css`. Rules:
+
+- **Semantic tokens only.** Never hardcode hex values or `dark:` colour overrides in feature markup. The tokens below are the contract:
+  - Light: `--background #F8FAFC`, `--card #FFFFFF`, `--foreground #0F172A`, `--muted-foreground #475569`, `--muted #F1F5F9`, `--border #E2E8F0`, `--primary #0F2D52`, `--accent #EBF5FF`
+  - Dark: navy-leaning surfaces (`#0B1524` background, `#111F35` cards, `#24334D` borders), light blue-grey text (`#E8F0FA` / `#96A9C4`), brightened primary (`#1071C9`)
+- `--brand-accent` (#127CDD light / #4EA1F0 dark) is for icons, indicators, and accent highlights on tinted surfaces.
+- `--brand-accent-fill` (#127CDD light / #1071C9 dark) is for filled blue surfaces that carry white text (sent chat bubbles, accent submit buttons).
+- Toggle: `SidebarFooter` hosts an `AnimatedThemeToggler` (View Transitions API) that reveals the new theme as an expanding circle from the button. Duration ~650ms; disabled (instant swap) under `prefers-reduced-motion` and in browsers without View Transitions support.
+- Clerk surfaces follow the theme automatically: the default Clerk theme (v7) tracks the document `color-scheme`, which `next-themes` sets on `<html>`. `ThemedClerkProvider` only overrides `variables.colorPrimary` per theme (`#1071C9` dark / `#0F2D52` light).
+
 
 ---
 

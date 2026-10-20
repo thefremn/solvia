@@ -86,12 +86,12 @@ export const CustomizationForm = ({
         onSubmit={form.handleSubmit(onSubmit)}
         className="flex flex-col gap-6"
       >
-        <Card className="border-[#E2E8F0] bg-white shadow-xs">
+        <Card className="border-border bg-card shadow-xs">
           <CardHeader>
-            <CardTitle className="text-base font-semibold text-[#0F172A]">
+            <CardTitle className="text-base font-semibold text-foreground">
               General Chat Settings
             </CardTitle>
-            <CardDescription className="text-sm text-[#475569]">
+            <CardDescription className="text-sm text-muted-foreground">
               Configure basic chat widget behaviour and messages
             </CardDescription>
           </CardHeader>
@@ -101,7 +101,7 @@ export const CustomizationForm = ({
               name="greetMessage"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-sm font-semibold text-[#0F172A]">
+                  <FormLabel className="text-sm font-semibold text-foreground">
                     Greeting Message
                   </FormLabel>
                   <FormControl>
@@ -109,23 +109,23 @@ export const CustomizationForm = ({
                       {...field}
                       placeholder="Welcome message shown when the chat open"
                       rows={3}
-                      className="border-[#E2E8F0] bg-white text-sm text-[#0F172A] placeholder:text-[#475569] focus-visible:border-[#0F2D52]"
+                      className="border-border bg-card text-sm text-foreground placeholder:text-muted-foreground focus-visible:border-ring"
                     />
                   </FormControl>
-                  <FormDescription className="text-xs text-[#475569]">
+                  <FormDescription className="text-xs text-muted-foreground">
                     The first message customers see when they open the chat
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <Separator className="bg-[#E2E8F0]" />
+            <Separator className="bg-muted" />
             <div className="flex flex-col gap-4">
               <div className="flex flex-col gap-1">
-                <h3 className="text-sm leading-snug font-semibold text-[#0F172A]">
+                <h3 className="text-sm leading-snug font-semibold text-foreground">
                   Default Suggestions
                 </h3>
-                <p className="text-sm text-[#475569]">
+                <p className="text-sm text-muted-foreground">
                   Quick reply suggestions shown to customers to help guide the
                   conversation
                 </p>
@@ -136,14 +136,14 @@ export const CustomizationForm = ({
                   name="defaultSuggestions.suggestion1"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-sm font-semibold text-[#0F172A]">
+                      <FormLabel className="text-sm font-semibold text-foreground">
                         Suggestion 1
                       </FormLabel>
                       <FormControl>
                         <Input
                           {...field}
                           placeholder="e.g., How do I get started?"
-                          className="h-10 border-[#E2E8F0] bg-white text-sm text-[#0F172A] placeholder:text-[#475569] focus-visible:border-[#0F2D52]"
+                          className="h-10 border-border bg-card text-sm text-foreground placeholder:text-muted-foreground focus-visible:border-ring"
                         />
                       </FormControl>
                       <FormMessage />
@@ -155,14 +155,14 @@ export const CustomizationForm = ({
                   name="defaultSuggestions.suggestion2"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-sm font-semibold text-[#0F172A]">
+                      <FormLabel className="text-sm font-semibold text-foreground">
                         Suggestion 2
                       </FormLabel>
                       <FormControl>
                         <Input
                           {...field}
                           placeholder="e.g., What are your pricing plans?"
-                          className="h-10 border-[#E2E8F0] bg-white text-sm text-[#0F172A] placeholder:text-[#475569] focus-visible:border-[#0F2D52]"
+                          className="h-10 border-border bg-card text-sm text-foreground placeholder:text-muted-foreground focus-visible:border-ring"
                         />
                       </FormControl>
                       <FormMessage />
@@ -174,14 +174,14 @@ export const CustomizationForm = ({
                   name="defaultSuggestions.suggestion3"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-sm font-semibold text-[#0F172A]">
+                      <FormLabel className="text-sm font-semibold text-foreground">
                         Suggestion 3
                       </FormLabel>
                       <FormControl>
                         <Input
                           {...field}
                           placeholder="e.g., I need help with my account"
-                          className="h-10 border-[#E2E8F0] bg-white text-sm text-[#0F172A] placeholder:text-[#475569] focus-visible:border-[#0F2D52]"
+                          className="h-10 border-border bg-card text-sm text-foreground placeholder:text-muted-foreground focus-visible:border-ring"
                         />
                       </FormControl>
                       <FormMessage />
@@ -193,12 +193,12 @@ export const CustomizationForm = ({
           </CardContent>
         </Card>
         {hasVapiPlugin && (
-          <Card className="border-[#E2E8F0] bg-white shadow-xs">
+          <Card className="border-border bg-card shadow-xs">
             <CardHeader>
-              <CardTitle className="text-base font-semibold text-[#0F172A]">
+              <CardTitle className="text-base font-semibold text-foreground">
                 Voice Assistant Settings
               </CardTitle>
-              <CardDescription className="text-sm text-[#475569]">
+              <CardDescription className="text-sm text-muted-foreground">
                 Configure voice calling features powered by Vapi
               </CardDescription>
             </CardHeader>
@@ -211,7 +211,7 @@ export const CustomizationForm = ({
           <Button
             disabled={form.formState.isSubmitting}
             type="submit"
-            className="h-10 bg-[#127CDD] px-4 text-sm font-semibold text-white hover:bg-[#0F2D52] disabled:bg-[#F1F5F9] disabled:text-[#94A3B8] disabled:opacity-100"
+            className="h-10 bg-brand-accent-fill px-4 text-sm font-semibold text-white hover:bg-primary/90 disabled:bg-muted disabled:text-muted-foreground disabled:opacity-100"
           >
             {form.formState.isSubmitting && (
               <Spinner data-icon="inline-start" />

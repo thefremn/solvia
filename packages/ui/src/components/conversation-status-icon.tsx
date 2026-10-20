@@ -9,20 +9,20 @@ interface ConversationStatusIconProps {
 const statusConfig = {
   resolved: {
     icon: CheckIcon,
-    bgColor: "bg-green-100",
-    iconColor: "text-green-700",
+    bgColor: "bg-green-100 dark:bg-green-500/15",
+    iconColor: "text-green-700 dark:text-green-400",
   },
 
   unresolved: {
     icon: ArrowRightIcon,
-    bgColor: "bg-red-100",
-    iconColor: "text-red-600",
+    bgColor: "bg-red-100 dark:bg-red-500/15",
+    iconColor: "text-red-600 dark:text-red-400",
   },
 
   escalated: {
     icon: ArrowUpIcon,
-    bgColor: "bg-amber-100",
-    iconColor: "text-amber-700",
+    bgColor: "bg-amber-100 dark:bg-amber-500/15",
+    iconColor: "text-amber-700 dark:text-amber-400",
   },
 } as const;
 

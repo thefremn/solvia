@@ -14,9 +14,9 @@ export const SubscriptionProtect = ({ children }: SubscriptionProtectProps) => {
   return (
     <>
       <AuthLoading>
-        <div className="flex min-h-screen items-center justify-center gap-2 bg-[#F8FAFC] p-8">
-          <Loader2Icon className="animate-spin text-[#0F2D52]" />
-          <p className="text-sm text-[#475569]">Loading...</p>
+        <div className="flex min-h-screen items-center justify-center gap-2 bg-background p-8">
+          <Loader2Icon className="animate-spin text-foreground" />
+          <p className="text-sm text-muted-foreground">Loading...</p>
         </div>
       </AuthLoading>
       <Authenticated>

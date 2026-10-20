@@ -3,6 +3,8 @@ import { Button } from "@workspace/ui/components/button";
 import { ArrowRightIcon, CheckIcon, ArrowUpIcon } from "lucide-react";
 import { cn } from "@workspace/ui/lib/utils";
 
+// Chat status is a fixed contract: identical appearance in light and dark
+// (per user request). Uses literal light-mode colours, no dark: variants.
 const STATUS_STYLES = {
   resolved:
     "border-[#E2E8F0] bg-white text-green-700 hover:bg-green-100 hover:text-green-700",

@@ -16,17 +16,17 @@ export const VapiPhoneNumbersTab = () => {
   const { data: phoneNumbers, isLoading } = useVapiPhoneNumbers();
 
   return (
-    <div className="bg-white">
+    <div className="bg-card">
       <Table>
         <TableHeader>
-          <TableRow className="border-[#E2E8F0] bg-[#F1F5F9] hover:bg-[#F1F5F9]">
-            <TableHead className="px-3 py-3 text-xs font-semibold tracking-wide text-[#475569] uppercase">
+          <TableRow className="border-border bg-muted hover:bg-muted">
+            <TableHead className="px-3 py-3 text-xs font-semibold tracking-wide text-muted-foreground uppercase">
               Phone Number
             </TableHead>
-            <TableHead className="px-3 py-3 text-xs font-semibold tracking-wide text-[#475569] uppercase">
+            <TableHead className="px-3 py-3 text-xs font-semibold tracking-wide text-muted-foreground uppercase">
               Name
             </TableHead>
-            <TableHead className="px-3 py-3 text-xs font-semibold tracking-wide text-[#475569] uppercase">
+            <TableHead className="px-3 py-3 text-xs font-semibold tracking-wide text-muted-foreground uppercase">
               Status
             </TableHead>
           </TableRow>
@@ -35,10 +35,10 @@ export const VapiPhoneNumbersTab = () => {
           {(() => {
             if (isLoading) {
               return (
-                <TableRow className="border-[#E2E8F0] hover:bg-transparent">
+                <TableRow className="border-border hover:bg-transparent">
                   <TableCell
                     colSpan={3}
-                    className="h-24 px-3 py-8 text-center text-sm text-[#475569]"
+                    className="h-24 px-3 py-8 text-center text-sm text-muted-foreground"
                   >
                     Loading phone numbers...
                   </TableCell>
@@ -47,10 +47,10 @@ export const VapiPhoneNumbersTab = () => {
             }
             if (phoneNumbers.length === 0) {
               return (
-                <TableRow className="border-[#E2E8F0] hover:bg-transparent">
+                <TableRow className="border-border hover:bg-transparent">
                   <TableCell
                     colSpan={3}
-                    className="h-24 px-3 py-8 text-center text-sm text-[#475569]"
+                    className="h-24 px-3 py-8 text-center text-sm text-muted-foreground"
                   >
                     No phone numbers configured
                   </TableCell>
@@ -62,26 +62,26 @@ export const VapiPhoneNumbersTab = () => {
               const isActive = phone.status === "active";
               return (
                 <TableRow
-                  className="border-[#E2E8F0] hover:bg-[#F1F5F9]"
+                  className="border-border hover:bg-muted"
                   key={phone.id}
                 >
                   <TableCell className="px-3 py-3">
                     <div className="flex items-center gap-3">
-                      <PhoneIcon className="size-4 shrink-0 text-[#475569]" />
-                      <span className="font-mono text-sm text-[#0F172A]">
+                      <PhoneIcon className="size-4 shrink-0 text-muted-foreground" />
+                      <span className="font-mono text-sm text-foreground">
                         {phone.number || "Not configured"}
                       </span>
                     </div>
                   </TableCell>
-                  <TableCell className="px-3 py-3 text-sm text-[#475569]">
+                  <TableCell className="px-3 py-3 text-sm text-muted-foreground">
                     {phone.name || "Unnamed"}
                   </TableCell>
                   <TableCell className="px-3 py-3">
                     <Badge
                       className={
                         isActive
-                          ? "border-transparent bg-green-100 font-semibold text-green-700 capitalize"
-                          : "border-transparent bg-slate-100 font-semibold text-slate-600 capitalize"
+                          ? "border-transparent bg-green-100 font-semibold text-green-700 dark:bg-green-500/15 dark:text-green-400 capitalize"
+                          : "border-transparent bg-slate-100 font-semibold text-slate-600 dark:bg-slate-500/15 dark:text-slate-400 capitalize"
                       }
                     >
                       {isActive && <CheckCircleIcon />}
